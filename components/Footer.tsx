@@ -10,7 +10,7 @@ export default function Footer() {
         JAA<span style={{ color: "var(--cyan)" }}>.</span>
       </div>
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", color: "var(--text3)" }}>
-        © 2025 · Designed & Built by{" "}
+        © 2026 · Designed & Built by{" "}
         <a href="mailto:akinolajohnayomide@gmail.com" style={{ color: "var(--cyan)", textDecoration: "none" }}>John Ayomide Akinola</a>
       </div>
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", color: "var(--text3)" }}>Lagos, Nigeria 🇳🇬</div>

@@ -40,15 +40,15 @@ export default function Navbar() {
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
           padding: "0 5%", height: 68,
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          background: scrolled ? "rgba(245,247,255,0.92)" : "rgba(245,247,255,0.6)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
+          background: scrolled ? "rgba(245,247,255,0.93)" : "rgba(245,247,255,0.7)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
           borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
           boxShadow: scrolled ? "var(--shadow-sm)" : "none",
           transition: "all 0.3s ease",
         }}
-        className="dark-nav"
       >
+        {/* Logo */}
         <a href="#hero" style={{
           fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "1.15rem",
           color: "var(--text)", textDecoration: "none", letterSpacing: "-0.02em",
@@ -56,8 +56,8 @@ export default function Navbar() {
           JAA<span style={{ color: "var(--cyan)" }}>.</span>
         </a>
 
-        {/* Desktop */}
-        <ul style={{ display: "flex", gap: "0.25rem", listStyle: "none", alignItems: "center", margin: 0, padding: 0 }} className="hidden md:flex">
+        {/* Desktop links — single ThemeToggle, no duplicate */}
+        <ul style={{ display: "flex", gap: "0.2rem", listStyle: "none", alignItems: "center", margin: 0, padding: 0 }} className="hidden md:flex">
           {links.map((l) => {
             const isActive = active === l.href.slice(1);
             return (
@@ -69,8 +69,7 @@ export default function Navbar() {
                   color: isActive ? "var(--cyan)" : "var(--text2)",
                   background: isActive ? "var(--cyan-dim)" : "transparent",
                   fontWeight: isActive ? 600 : 400,
-                  transition: "all 0.2s",
-                  display: "inline-block",
+                  transition: "all 0.2s", display: "inline-block",
                 }}
                 onMouseEnter={e => {
                   if (!isActive) {
@@ -84,39 +83,31 @@ export default function Navbar() {
                     (e.currentTarget as HTMLElement).style.background = "transparent";
                   }
                 }}
-                >
-                  {l.label}
-                </a>
+                >{l.label}</a>
               </li>
             );
           })}
           <li style={{ marginLeft: "0.75rem" }}>
             <a href="#contact" style={{
               fontFamily: "'Syne', sans-serif", fontSize: "0.82rem", fontWeight: 700,
-              letterSpacing: "0.02em", textDecoration: "none",
-              padding: "0.5rem 1.3rem",
-              background: "var(--cyan)",
-              color: "#fff",
-              borderRadius: "8px",
-              boxShadow: "var(--shadow-cyan)",
-              transition: "all 0.2s",
-              display: "inline-block",
+              textDecoration: "none", padding: "0.5rem 1.3rem",
+              background: "var(--cyan)", color: "#fff", borderRadius: "8px",
+              boxShadow: "var(--shadow-cyan)", transition: "all 0.2s", display: "inline-block",
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.88"; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
-            >
-              Hire Me
-            </a>
+            >Hire Me</a>
           </li>
-          <li style={{ marginLeft: "0.5rem" }}><ThemeToggle /></li>
+          {/* SINGLE ThemeToggle — desktop only here */}
+          <li style={{ marginLeft: "0.4rem" }}><ThemeToggle /></li>
         </ul>
 
-        {/* Mobile */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }} className="flex md:hidden">
+        {/* Mobile: ThemeToggle + hamburger only */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }} className="flex md:hidden">
           <ThemeToggle />
           <button onClick={() => setOpen(!open)} style={{
             background: "var(--surface)", border: "1px solid var(--border)",
-            color: "var(--text)", cursor: "pointer", padding: "6px",
+            color: "var(--text)", cursor: "pointer", padding: "7px",
             borderRadius: "8px", display: "flex", boxShadow: "var(--shadow-sm)",
           }}>
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -136,8 +127,7 @@ export default function Navbar() {
               position: "fixed", top: 68, left: 0, right: 0, zIndex: 40,
               display: "flex", flexDirection: "column", gap: "0.3rem",
               padding: "1rem 5%",
-              background: "var(--bg)",
-              borderBottom: "1px solid var(--border)",
+              background: "var(--bg)", borderBottom: "1px solid var(--border)",
               boxShadow: "var(--shadow-md)",
             }}
           >
@@ -146,24 +136,15 @@ export default function Navbar() {
                 fontFamily: "'JetBrains Mono', monospace", fontSize: "0.8rem",
                 letterSpacing: "0.08em", textTransform: "uppercase",
                 color: "var(--text2)", textDecoration: "none",
-                padding: "0.7rem 0.9rem", borderRadius: "8px",
-                transition: "all 0.2s",
+                padding: "0.7rem 0.9rem", borderRadius: "8px", transition: "all 0.2s",
               }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--cyan)"; (e.currentTarget as HTMLElement).style.background = "var(--cyan-dim)"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--text2)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
-              >
-                {l.label}
-              </a>
+              >{l.label}</a>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style jsx global>{`
-        html.dark .dark-nav {
-          background: ${scrolled ? "rgba(5,10,18,0.92)" : "rgba(5,10,18,0.7)"} !important;
-        }
-      `}</style>
     </>
   );
 }
