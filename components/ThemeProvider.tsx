@@ -1,29 +1,33 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "light" | "dark";
 
 const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({
-  theme: "dark",
+  theme: "light",
   toggle: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("jaa-theme") as Theme | null;
-    const preferred = saved || "dark";
+    const preferred = saved || "light";
     setTheme(preferred);
-    document.documentElement.classList.toggle("light", preferred === "light");
+    document.documentElement.classList.toggle("dark", preferred === "dark");
+    setMounted(true);
   }, []);
 
   const toggle = () => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
+    const next: Theme = theme === "light" ? "dark" : "light";
     setTheme(next);
     localStorage.setItem("jaa-theme", next);
-    document.documentElement.classList.toggle("light", next === "light");
+    document.documentElement.classList.toggle("dark", next === "dark");
   };
+
+  if (!mounted) return <>{children}</>;
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>
