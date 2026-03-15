@@ -40,7 +40,7 @@ export default function About() {
                   whileHover={{ y:-3, borderColor:"rgba(0,200,255,0.4)" }}
                   style={{ padding:"1.1rem", borderRadius:"10px", background:"var(--surface)", border:"1px solid var(--border)", transition:"all 0.3s" }}>
                   <div style={{ fontSize:"1.4rem", marginBottom:"0.4rem" }}>{p.icon}</div>
-                  <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.87rem", color:"white" }}>{p.title}</div>
+                  <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.87rem", color:"var(--text)" }}>{p.title}</div>
                   <div style={{ fontSize:"0.76rem", color:"var(--text3)", marginTop:"0.15rem" }}>{p.desc}</div>
                 </motion.div>
               ))}
@@ -56,7 +56,7 @@ export default function About() {
                   style={{ marginBottom:"2rem", position:"relative" }}>
                   <span style={{ position:"absolute", left:"-2.12rem", top:"6px", width:12, height:12, borderRadius:"50%", background:"var(--cyan)", boxShadow:"0 0 8px var(--cyan-glow)", display:"inline-block" }} />
                   <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.7rem", color:"var(--cyan)", letterSpacing:"0.08em", marginBottom:"0.3rem" }}>{t.year}</div>
-                  <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.95rem", color:"white", marginBottom:"0.15rem" }}>{t.role}</div>
+                  <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.95rem", color:"var(--text)", marginBottom:"0.15rem" }}>{t.role}</div>
                   <div style={{ fontSize:"0.82rem", color:"var(--text2)", marginBottom:"0.4rem" }}>{t.company}</div>
                   <div style={{ fontSize:"0.82rem", color:"var(--text3)", lineHeight:1.7 }}>{t.desc}</div>
                 </motion.div>

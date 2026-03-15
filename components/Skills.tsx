@@ -27,7 +27,7 @@ export default function Skills() {
               style={{ padding:"1.4rem", borderRadius:"12px", background:"var(--surface)", border:"1px solid var(--border)", position:"relative", overflow:"hidden", transition:"all 0.3s" }}>
               <div style={{ display:"flex", alignItems:"center", gap:"0.8rem", marginBottom:"1rem" }}>
                 <div style={{ width:40, height:40, borderRadius:"10px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"1.2rem", background:s.color, flexShrink:0 }}>{s.icon}</div>
-                <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.9rem", color:"white" }}>{s.title}</div>
+                <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.9rem", color:"var(--text)" }}>{s.title}</div>
               </div>
               <div style={{ display:"flex", flexWrap:"wrap", gap:"0.4rem" }}>
                 {s.tags.map((tag) => (

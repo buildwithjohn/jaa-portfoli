@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "John Ayomide Akinola — DevOps & Cloud Engineer",
@@ -24,8 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-        {children}
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

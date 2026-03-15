@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── DARK MODE (default) ── */
 :root {
   --bg: #050a12;
   --bg2: #080f1c;
@@ -17,6 +18,28 @@
   --text3: #4d6a8a;
   --green: #00d084;
   --gold: #f0b429;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --card-hover-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* ── LIGHT MODE ── */
+html.light {
+  --bg: #f0f4ff;
+  --bg2: #e6ecf8;
+  --surface: #ffffff;
+  --surface2: #dce6f5;
+  --border: rgba(0, 120, 200, 0.15);
+  --cyan: #0077cc;
+  --cyan2: #0090e0;
+  --cyan-dim: rgba(0, 120, 200, 0.1);
+  --cyan-glow: rgba(0, 120, 200, 0.3);
+  --text: #0d1b2e;
+  --text2: #3a5068;
+  --text3: #7a96b0;
+  --green: #00a86b;
+  --gold: #c88a00;
+  --shadow: rgba(0, 50, 120, 0.1);
+  --card-hover-shadow: 0 15px 50px rgba(0, 50, 120, 0.12);
 }
 
 *, *::before, *::after {
@@ -30,9 +53,10 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 ::-webkit-scrollbar { width: 4px; }
@@ -40,7 +64,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
 
 .text-gradient {
-  background: linear-gradient(135deg, #00c8ff, #00e5ff);
+  background: linear-gradient(135deg, var(--cyan), var(--cyan2));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -48,9 +72,14 @@ body {
 
 .grid-bg {
   background-image:
-    linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 60px 60px;
   -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* Smooth transitions on theme-sensitive elements */
+section, nav, footer, div, a, button, input, textarea {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }

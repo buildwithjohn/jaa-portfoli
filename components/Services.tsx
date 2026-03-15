@@ -25,7 +25,7 @@ export default function Services() {
               whileHover={{ y:-4, borderColor:"rgba(0,200,255,0.3)" }}
               style={{ padding:"1.8rem", borderRadius:"14px", background:"var(--surface)", border:"1px solid var(--border)", transition:"all 0.3s" }}>
               <div style={{ width:48, height:48, borderRadius:"12px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"1.4rem", background:s.bg, marginBottom:"1.2rem" }}>{s.icon}</div>
-              <h3 style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"1rem", color:"white", marginBottom:"0.6rem" }}>{s.title}</h3>
+              <h3 style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"1rem", color:"var(--text)", marginBottom:"0.6rem" }}>{s.title}</h3>
               <p style={{ fontSize:"0.84rem", color:"var(--text2)", lineHeight:1.75, fontWeight:300 }}>{s.desc}</p>
             </motion.div>
           ))}

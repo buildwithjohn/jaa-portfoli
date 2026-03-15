@@ -34,7 +34,7 @@ export default function Contact() {
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"5rem" }} className="contact-grid">
           {/* Info */}
           <motion.div initial={{ opacity:0, x:-24 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.6 }}>
-            <h3 style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"1.2rem", color:"white", marginBottom:"0.5rem" }}>Open to opportunities</h3>
+            <h3 style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"1.2rem", color:"var(--text)", marginBottom:"0.5rem" }}>Open to opportunities</h3>
             <p style={{ fontSize:"0.9rem", color:"var(--text2)", fontWeight:300, marginBottom:"2rem", lineHeight:1.8 }}>Remote DevOps/Cloud roles, freelance web and design projects, consulting engagements, or just a good conversation about tech. Reach out.</p>
             <div style={{ display:"flex", flexDirection:"column", gap:"0.85rem" }}>
               {contactLinks.map((c) => (

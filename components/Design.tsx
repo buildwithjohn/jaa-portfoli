@@ -19,7 +19,7 @@ export default function Design() {
               <span style={{ width:20, height:1, background:"var(--cyan)", display:"inline-block" }} />
               <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.7rem", color:"var(--cyan)", letterSpacing:"0.15em", textTransform:"uppercase" }}>Design Portfolio</span>
             </div>
-            <h2 style={{ fontFamily:"'Syne', sans-serif", fontSize:"clamp(2rem,4vw,3rem)", fontWeight:800, color:"white", lineHeight:1.1, letterSpacing:"-0.03em" }}>
+            <h2 style={{ fontFamily:"'Syne', sans-serif", fontSize:"clamp(2rem,4vw,3rem)", fontWeight:800, color:"var(--text)", lineHeight:1.1, letterSpacing:"-0.03em" }}>
               The visual side<br/>of John.
             </h2>
           </div>
@@ -50,20 +50,20 @@ export default function Design() {
                 {d.large ? (
                   <div style={{ textAlign:"center", padding:"2rem" }}>
                     <div style={{ fontSize:"3.5rem", marginBottom:"0.8rem" }}>{d.emoji}</div>
-                    <div style={{ fontFamily:"'Syne', sans-serif", fontSize:"1.7rem", fontWeight:800, color:"white", letterSpacing:"-0.02em" }}>Event Graphics</div>
+                    <div style={{ fontFamily:"'Syne', sans-serif", fontSize:"1.7rem", fontWeight:800, color:"var(--text)", letterSpacing:"-0.02em" }}>Event Graphics</div>
                     <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.7rem", color:"var(--cyan)", marginTop:"0.4rem", letterSpacing:"0.12em" }}>CONFERENCE · BIRTHDAY · CONCERT</div>
                   </div>
                 ) : (
                   <div style={{ textAlign:"center" }}>
                     <div style={{ fontSize:"3rem", marginBottom:"0.4rem" }}>{d.emoji}</div>
-                    <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:800, color:"white", fontSize:"0.95rem" }}>{d.type.split("·")[0].trim()}</div>
+                    <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:800, color:"var(--text)", fontSize:"0.95rem" }}>{d.type.split("·")[0].trim()}</div>
                   </div>
                 )}
               </div>
               {/* hover overlay */}
               <motion.div initial={{ opacity:0 }} whileHover={{ opacity:1 }} transition={{ duration:0.25 }}
                 style={{ position:"absolute", inset:0, background:"linear-gradient(to top,rgba(5,10,18,0.95) 0%,rgba(5,10,18,0.4) 50%,transparent 100%)", display:"flex", flexDirection:"column", justifyContent:"flex-end", padding:"1.2rem" }}>
-                <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.9rem", color:"white", marginBottom:"0.3rem" }}>{d.title}</div>
+                <div style={{ fontFamily:"'Syne', sans-serif", fontWeight:700, fontSize:"0.9rem", color:"var(--text)", marginBottom:"0.3rem" }}>{d.title}</div>
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", color:"var(--cyan)", letterSpacing:"0.1em", textTransform:"uppercase" }}>{d.type}</div>
               </motion.div>
             </motion.div>
