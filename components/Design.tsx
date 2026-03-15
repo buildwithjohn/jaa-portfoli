@@ -14,7 +14,7 @@ export default function Design() {
     <section id="design" style={{ padding:"6rem 5%", background:"var(--bg)" }}>
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         {/* Header row */}
-        <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:"1rem", marginBottom:"1.2rem" }}>
+        <div className="design-header">
           <div>
             <div style={{ display:"flex", alignItems:"center", gap:"0.8rem", marginBottom:"0.8rem" }}>
               <span style={{ width:20, height:2, background:"var(--cyan)", display:"inline-block", borderRadius:2 }}/>
@@ -24,8 +24,8 @@ export default function Design() {
               The visual side<br/>of John.
             </h2>
           </div>
-          <motion.div initial={{ opacity:0, x:20 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }}
-            style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.75rem", color:"var(--cyan)", border:"1px solid var(--border)", background:"var(--cyan-dim)", borderRadius:"6px", padding:"0.5rem 1rem", whiteSpace:"nowrap" }}>
+          <motion.div className="design-badge" initial={{ opacity:0, x:20 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }}
+            style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.72rem", color:"var(--cyan)", border:"1px solid var(--border)", background:"var(--cyan-dim)", borderRadius:"6px", padding:"0.5rem 0.9rem", maxWidth:"100%", wordBreak:"break-word", lineHeight:1.5 }}>
             ✦ Available for design projects — let&apos;s create something great
           </motion.div>
         </div>
