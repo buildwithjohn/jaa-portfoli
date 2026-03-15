@@ -167,7 +167,7 @@ export default function Services() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <SectionHeader label="Services" title="How I can<br/>help you."
           subtitle="Whether you need infrastructure built, a website shipped, your team trained, or your brand visualised — I've got you." />
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:"1.2rem" }}>
+        <div className="services-grid">
           {services.map((s,i)=>(
             <motion.div key={s.title}
               initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}

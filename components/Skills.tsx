@@ -299,7 +299,7 @@ export default function Skills() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <SectionHeader label="Skills & Expertise" title="Eight domains.<br/>One engineer."
           subtitle="Depth across cloud infrastructure, software engineering, security, design, and education — not a jack of all trades, but a master of each." />
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))", gap:"1.2rem" }}>
+        <div className="skills-grid">
           {skills.map((s, i) => (
             <motion.div key={s.title}
               initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }}

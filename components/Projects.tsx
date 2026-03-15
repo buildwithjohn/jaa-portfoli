@@ -333,7 +333,7 @@ export default function Projects() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <SectionHeader label="Engineering Projects" title="Built. Shipped.<br/>Production-grade."
           subtitle="Real platforms, real architecture, real impact — from microservices to social networks to real estate intelligence." />
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(350px,1fr))", gap:"1.4rem" }}>
+        <div className="projects-grid">
           {projects.map((p, i) => (
             <motion.div key={p.title}
               initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }}

@@ -212,7 +212,7 @@ export default function Credentials() {
           subtitle="Academic depth meets industry certification — every qualification reflects a deliberate investment in excellence."
         />
 
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(520px,1fr))", gap:"1.4rem" }}>
+        <div className="credentials-grid">
           {credentials.map((c, i) => {
             const Visual = visuals[c.visual];
             return (
