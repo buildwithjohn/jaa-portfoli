@@ -9,7 +9,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 const stats = [
-  { num: "9+", label: "Projects Shipped" },
+  { num: "16+", label: "Projects Shipped" },
   { num: "8",  label: "Skill Domains" },
   { num: "2",  label: "Companies Led" },
   { num: "∞",  label: "Curiosity" },
