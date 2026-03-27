@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "./ThemeProvider";
 
@@ -16,17 +18,12 @@ const links = [
 
 function LogoImg() {
   const { theme } = useTheme();
-  // White logo for dark mode, dark logo for light mode
   const src = theme === "dark" ? "/jaa-logo-white.png" : "/jaa-logo-dark.png";
   return (
-    <Image
-      src={src}
-      alt="JAA"
-      width={64}
-      height={30}
+    <Image src={src} alt="JAA — John Ayomide Akinola"
+      width={64} height={30}
       style={{ objectFit: "contain", height: 30, width: "auto" }}
-      priority
-    />
+      priority />
   );
 }
 
@@ -34,10 +31,14 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
   const [active, setActive]     = useState("");
+  const pathname  = usePathname();
+  const router    = useRouter();
+  const isHome    = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 40);
+      if (!isHome) return;
       const ids = ["about","skills","projects","design","services","contact"];
       for (const id of [...ids].reverse()) {
         const el = document.getElementById(id);
@@ -46,7 +47,21 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
+
+  // Smart nav handler — if on homepage scroll to section,
+  // if on another page navigate to /#section
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const sectionId = href.replace("#", "");
+    if (isHome) {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/${href}`);
+    }
+    setOpen(false);
+  };
 
   return (
     <>
@@ -79,66 +94,78 @@ export default function Navbar() {
           transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
         }}
       >
-        {/* Logo image */}
-        <a href="#hero" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+        {/* Logo — always links to homepage */}
+        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
           <LogoImg />
-        </a>
+        </Link>
 
-        {/* ── DESKTOP links + single toggle ── */}
+        {/* ── DESKTOP links ── */}
         <ul className="nav-desktop" style={{
-          gap:"0.2rem", listStyle:"none", alignItems:"center", margin:0, padding:0,
+          gap: "0.2rem", listStyle: "none", alignItems: "center", margin: 0, padding: 0,
         }}>
           {links.map((l) => {
-            const isActive = active === l.href.slice(1);
+            const sectionId = l.href.replace("#", "");
+            const isActive = isHome && active === sectionId;
             return (
               <li key={l.href}>
-                <a href={l.href} style={{
-                  fontFamily:"'JetBrains Mono',monospace", fontSize:"0.72rem",
-                  letterSpacing:"0.08em", textTransform:"uppercase", textDecoration:"none",
-                  padding:"0.4rem 0.85rem", borderRadius:"6px",
-                  color: isActive ? "var(--cyan)" : "var(--text2)",
-                  background: isActive ? "var(--cyan-dim)" : "transparent",
-                  fontWeight: isActive ? 600 : 400,
-                  transition:"all 0.2s", display:"inline-block",
-                }}
-                onMouseEnter={e => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color="var(--cyan)";
-                    (e.currentTarget as HTMLElement).style.background="var(--cyan-dim)";
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color="var(--text2)";
-                    (e.currentTarget as HTMLElement).style.background="transparent";
-                  }
-                }}>{l.label}</a>
+                <a
+                  href={isHome ? l.href : `/${l.href}`}
+                  onClick={(e) => handleNavClick(e, l.href)}
+                  style={{
+                    fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem",
+                    letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none",
+                    padding: "0.4rem 0.85rem", borderRadius: "6px",
+                    color: isActive ? "var(--cyan)" : "var(--text2)",
+                    background: isActive ? "var(--cyan-dim)" : "transparent",
+                    fontWeight: isActive ? 600 : 400,
+                    transition: "all 0.2s", display: "inline-block",
+                  }}
+                  onMouseEnter={e => {
+                    if (!isActive) {
+                      (e.currentTarget as HTMLElement).style.color = "var(--cyan)";
+                      (e.currentTarget as HTMLElement).style.background = "var(--cyan-dim)";
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!isActive) {
+                      (e.currentTarget as HTMLElement).style.color = "var(--text2)";
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                    }
+                  }}
+                >
+                  {l.label}
+                </a>
               </li>
             );
           })}
-          <li style={{ marginLeft:"0.75rem" }}>
-            <a href="#contact" style={{
-              fontFamily:"'Syne',sans-serif", fontSize:"0.82rem", fontWeight:700,
-              textDecoration:"none", padding:"0.5rem 1.3rem",
-              background:"var(--cyan)", color:"#fff", borderRadius:"8px",
-              boxShadow:"var(--shadow-cyan)", transition:"all 0.2s", display:"inline-block",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity="0.88"; (e.currentTarget as HTMLElement).style.transform="translateY(-1px)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity="1"; (e.currentTarget as HTMLElement).style.transform="translateY(0)"; }}
-            >Hire Me</a>
+          <li style={{ marginLeft: "0.75rem" }}>
+            <a
+              href={isHome ? "#contact" : "/#contact"}
+              onClick={(e) => handleNavClick(e, "#contact")}
+              style={{
+                fontFamily: "'Syne',sans-serif", fontSize: "0.82rem", fontWeight: 700,
+                textDecoration: "none", padding: "0.5rem 1.3rem",
+                background: "var(--cyan)", color: "#fff", borderRadius: "8px",
+                boxShadow: "var(--shadow-cyan)", transition: "all 0.2s", display: "inline-block",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.88"; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
+            >
+              Hire Me
+            </a>
           </li>
-          <li style={{ marginLeft:"0.4rem" }}><ThemeToggle /></li>
+          <li style={{ marginLeft: "0.4rem" }}><ThemeToggle /></li>
         </ul>
 
-        {/* ── MOBILE: toggle + hamburger only ── */}
-        <div className="nav-mobile" style={{ alignItems:"center", gap:"0.5rem" }}>
+        {/* ── MOBILE ── */}
+        <div className="nav-mobile" style={{ alignItems: "center", gap: "0.5rem" }}>
           <ThemeToggle />
           <button onClick={() => setOpen(!open)} style={{
-            background:"var(--surface)", border:"1px solid var(--border)",
-            color:"var(--text)", cursor:"pointer", padding:"7px",
-            borderRadius:"8px", display:"flex", boxShadow:"var(--shadow-sm)",
+            background: "var(--surface)", border: "1px solid var(--border)",
+            color: "var(--text)", cursor: "pointer", padding: "7px",
+            borderRadius: "8px", display: "flex", boxShadow: "var(--shadow-sm)",
           }}>
-            {open ? <X size={20}/> : <Menu size={20}/>}
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </motion.nav>
@@ -147,26 +174,34 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity:0, y:-10 }} animate={{ opacity:1, y:0 }}
-            exit={{ opacity:0, y:-10 }} transition={{ duration:0.2 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
             style={{
-              position:"fixed", top:68, left:0, right:0, zIndex:40,
-              display:"flex", flexDirection:"column", gap:"0.3rem",
-              padding:"1rem 5%",
-              background:"var(--bg)", borderBottom:"1px solid var(--border)",
-              boxShadow:"var(--shadow-md)",
+              position: "fixed", top: 68, left: 0, right: 0, zIndex: 40,
+              display: "flex", flexDirection: "column", gap: "0.3rem",
+              padding: "1rem 5%",
+              background: "var(--bg)", borderBottom: "1px solid var(--border)",
+              boxShadow: "var(--shadow-md)",
             }}
           >
-            {[...links, { href:"#contact", label:"Hire Me" }].map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{
-                fontFamily:"'JetBrains Mono',monospace", fontSize:"0.8rem",
-                letterSpacing:"0.08em", textTransform:"uppercase",
-                color:"var(--text2)", textDecoration:"none",
-                padding:"0.7rem 0.9rem", borderRadius:"8px", transition:"all 0.2s",
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color="var(--cyan)"; (e.currentTarget as HTMLElement).style.background="var(--cyan-dim)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color="var(--text2)"; (e.currentTarget as HTMLElement).style.background="transparent"; }}
-              >{l.label}</a>
+            {[...links, { href: "#contact", label: "Hire Me" }].map((l) => (
+              <a
+                key={l.href}
+                href={isHome ? l.href : `/${l.href}`}
+                onClick={(e) => handleNavClick(e, l.href)}
+                style={{
+                  fontFamily: "'JetBrains Mono',monospace", fontSize: "0.8rem",
+                  letterSpacing: "0.08em", textTransform: "uppercase",
+                  color: "var(--text2)", textDecoration: "none",
+                  padding: "0.7rem 0.9rem", borderRadius: "8px", transition: "all 0.2s",
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--cyan)"; (e.currentTarget as HTMLElement).style.background = "var(--cyan-dim)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--text2)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+              >
+                {l.label}
+              </a>
             ))}
           </motion.div>
         )}
