@@ -195,7 +195,7 @@ export default function DesignPage() {
               </h2>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.2rem" }}>
+            <div className="design-page-categories">
               {categories.map((c, i) => (
                 <motion.div
                   key={c.title}
@@ -228,7 +228,7 @@ export default function DesignPage() {
               </h2>
             </motion.div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+            <div className="design-page-tools">
               {[
                 { name: "Adobe Photoshop", level: "Advanced", color: "#31a8ff", icon: "Ps" },
                 { name: "CorelDRAW",       level: "Advanced", color: "#77bc1f", icon: "Cd" },
@@ -265,7 +265,7 @@ export default function DesignPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              style={{ padding: "3.5rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "20px", boxShadow: "var(--shadow-md)", textAlign: "center", position: "relative", overflow: "hidden" }}
+              className="drive-cta" style={{ padding: "3.5rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "20px", boxShadow: "var(--shadow-md)", textAlign: "center", position: "relative", overflow: "hidden" }}
             >
               {/* Ambient glow */}
               <div style={{ position: "absolute", top: -60, right: -60, width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, var(--cyan-dim), transparent 70%)", filter: "blur(60px)", pointerEvents: "none" }} />
@@ -304,7 +304,7 @@ export default function DesignPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55 }}
-              style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem", padding: "2rem 2.4rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px", boxShadow: "var(--shadow-sm)" }}
+              className="hire-bar" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem", padding: "2rem 2.4rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px", boxShadow: "var(--shadow-sm)" }}
             >
               <div>
                 <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "1.2rem", color: "var(--text)", marginBottom: "0.35rem" }}>

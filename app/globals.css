@@ -243,3 +243,137 @@ html.dark .jaa-nav {
     font-size: 0.68rem !important;
   }
 }
+
+/* ══════════════════════════════════════
+   DESIGN PAGE RESPONSIVE
+══════════════════════════════════════ */
+.design-page-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+.design-page-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.design-page-tools > * {
+  min-width: 180px;
+  flex: 1 1 180px;
+}
+
+@media (max-width: 640px) {
+  /* Design page story row stacks */
+  .story-row {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  .story-row > div:first-child {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  /* Design page categories */
+  .design-page-categories {
+    grid-template-columns: 1fr !important;
+  }
+  /* Design page tools */
+  .design-page-tools > * {
+    min-width: 100% !important;
+  }
+  /* Drive CTA padding */
+  .drive-cta {
+    padding: 2rem 1.4rem !important;
+  }
+  /* Hire bar stacks */
+  .hire-bar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* Stats row on mobile */
+@media (max-width: 420px) {
+  .hero-stats-row {
+    gap: 1.2rem !important;
+  }
+}
+
+/* Credential cards on very small screens */
+@media (max-width: 560px) {
+  .credentials-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Credential card flex direction */
+  .credential-card-inner {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Project cards on small mobile */
+@media (max-width: 400px) {
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Skill cards on small mobile */
+@media (max-width: 400px) {
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Services stacking */
+@media (max-width: 400px) {
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Contact grid on mobile */
+@media (max-width: 500px) {
+  .contact-grid {
+    gap: 2rem !important;
+  }
+}
+
+/* Hero section padding on very small screens */
+@media (max-width: 380px) {
+  #hero {
+    padding: 100px 4% 60px !important;
+  }
+  section {
+    padding-left: 4% !important;
+    padding-right: 4% !important;
+  }
+}
+
+/* Navbar logo size on tiny screens */
+@media (max-width: 360px) {
+  .jaa-nav {
+    padding: 0 4% !important;
+  }
+}
+
+/* Design page hero on mobile */
+@media (max-width: 640px) {
+  .design-hero-btns {
+    flex-direction: column !important;
+  }
+  .design-hero-btns a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Prevent any element from overflowing on mobile */
+* {
+  max-width: 100%;
+}
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
