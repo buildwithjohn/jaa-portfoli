@@ -95,8 +95,20 @@ export default function Navbar() {
         }}
       >
         {/* Logo — always links to homepage */}
-        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
-          <LogoImg />
+        <Link href="/"
+          style={{
+            textDecoration: "none",
+            display: "flex",
+            alignItems: "center",
+            cursor: "pointer",
+            position: "relative",
+            zIndex: 10,
+            padding: "8px 4px",
+          }}
+        >
+          <span style={{ pointerEvents: "none", display: "flex", alignItems: "center" }}>
+            <LogoImg />
+          </span>
         </Link>
 
         {/* ── DESKTOP links ── */}
