@@ -2,7 +2,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
+import { useTheme } from "./ThemeProvider";
 
 const links = [
   { href: "#about",    label: "About"    },
@@ -11,6 +13,22 @@ const links = [
   { href: "#design",   label: "Design"   },
   { href: "#services", label: "Services" },
 ];
+
+function LogoImg() {
+  const { theme } = useTheme();
+  // White logo for dark mode, dark logo for light mode
+  const src = theme === "dark" ? "/jaa-logo-white.png" : "/jaa-logo-dark.png";
+  return (
+    <Image
+      src={src}
+      alt="JAA"
+      width={64}
+      height={30}
+      style={{ objectFit: "contain", height: 30, width: "auto" }}
+      priority
+    />
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -40,9 +58,7 @@ export default function Navbar() {
           .nav-mobile  { display: flex !important; }
         }
         html.dark .jaa-nav {
-          background: ${scrolled
-            ? "rgba(5,10,18,0.94) !important"
-            : "rgba(5,10,18,0.72) !important"};
+          background: ${scrolled ? "rgba(5,10,18,0.94)" : "rgba(5,10,18,0.72)"} !important;
         }
       `}</style>
 
@@ -63,12 +79,9 @@ export default function Navbar() {
           transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
         }}
       >
-        {/* Logo */}
-        <a href="#hero" style={{
-          fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"1.15rem",
-          color:"var(--text)", textDecoration:"none", letterSpacing:"-0.02em",
-        }}>
-          JAA<span style={{ color:"var(--cyan)" }}>.</span>
+        {/* Logo image */}
+        <a href="#hero" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+          <LogoImg />
         </a>
 
         {/* ── DESKTOP links + single toggle ── */}
