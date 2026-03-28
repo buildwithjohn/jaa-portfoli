@@ -171,6 +171,52 @@ export default function UniversePage() {
           ))}
         </div>
 
+
+      {/* ── FREE BOOK ── */}
+      <section style={{ padding:"4rem 5%", background:"var(--bg2)", position:"relative", overflow:"hidden" }}>
+        <motion.div animate={{ scale:[1,1.06,1], opacity:[0.3,0.15,0.3] }} transition={{ duration:10, repeat:Infinity }}
+          style={{ position:"absolute", top:-100, left:-100, width:400, height:400, borderRadius:"50%", background:"radial-gradient(circle,rgba(217,119,6,0.12),transparent 70%)", filter:"blur(80px)", pointerEvents:"none" }}/>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"auto 1fr", gap:"3.5rem", alignItems:"center", position:"relative", zIndex:1 }} className="hero-grid">
+
+          {/* Book image */}
+          <motion.div initial={{ opacity:0, x:-30 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
+            whileHover={{ y:-8, rotate:2 }} style={{ flexShrink:0 }}>
+            <div style={{ position:"relative", width:180, height:260, filter:"drop-shadow(0 24px 48px rgba(0,0,0,0.4))" }}>
+              <img src="/book-stand.png" alt="From Chemistry Class to Cloud" style={{ width:180, height:260, objectFit:"cover", borderRadius:6 }}/>
+            </div>
+          </motion.div>
+
+          {/* Book info */}
+          <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.6, delay:0.15 }}>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:"0.5rem", padding:"0.3rem 0.9rem", background:"rgba(217,119,6,0.12)", border:"1px solid rgba(217,119,6,0.3)", borderRadius:"100px", marginBottom:"1rem" }}>
+              <motion.span animate={{ scale:[1,1.2,1] }} transition={{ duration:1.5, repeat:Infinity }}
+                style={{ fontSize:"0.75rem" }}>🎁</motion.span>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.65rem", color:"#d97706", letterSpacing:"0.12em", textTransform:"uppercase", fontWeight:600 }}>FREE DOWNLOAD — Limited Time</span>
+            </div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,3.5vw,2.4rem)", fontWeight:800, color:"var(--text)", lineHeight:1.1, letterSpacing:"-0.03em", marginBottom:"0.8rem" }}>
+              From Chemistry Class<br/>
+              <span style={{ background:"linear-gradient(135deg,#d97706,#f59e0b)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>to Cloud</span>
+            </h2>
+            <p style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.72rem", color:"var(--text3)", marginBottom:"1rem", letterSpacing:"0.04em" }}>
+              By John Ayomide Akinola
+            </p>
+            <p style={{ fontSize:"0.92rem", color:"var(--text2)", lineHeight:1.82, fontWeight:300, maxWidth:480, marginBottom:"1.8rem" }}>
+              A Chemistry Education graduate&apos;s honest roadmap to becoming a Cloud Engineer. No fluff — just the real path, the real tools, and the real mindset shifts that made the transition possible. Now free for every aspiring engineer.
+            </p>
+            <div style={{ display:"flex", flexWrap:"wrap", gap:"0.8rem", alignItems:"center" }}>
+              <motion.a whileHover={{ y:-2, boxShadow:"0 12px 40px rgba(217,119,6,0.4)" }}
+                href="https://selar.com/7zl4237770" target="_blank" rel="noreferrer"
+                style={{ display:"inline-flex", alignItems:"center", gap:"0.55rem", padding:"0.9rem 2rem", background:"linear-gradient(135deg,#d97706,#f59e0b)", color:"#fff", fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"0.92rem", textDecoration:"none", borderRadius:"10px", boxShadow:"0 4px 20px rgba(217,119,6,0.35)" }}>
+                📥 Download Free
+              </motion.a>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"var(--text3)", letterSpacing:"0.06em" }}>
+                ~~₦2,500~~ FREE · Instant Download
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
         {/* Bottom quote */}
         <motion.p initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.4, duration:1 }}
           style={{ marginTop:"3.5rem", fontFamily:"'Syne',sans-serif", fontSize:"0.82rem", color:"var(--text3)", textAlign:"center", fontStyle:"italic" }}>

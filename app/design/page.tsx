@@ -2,340 +2,231 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { ExternalLink, ArrowLeft, FolderOpen } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
+import { FolderOpen, ArrowLeft, ExternalLink } from "lucide-react";
 
 const DRIVE_URL = "https://drive.google.com/drive/folders/1nAI1xbZwf0QlrbdKGzuhc-yDB6aligYM?usp=sharing";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, ease: "easeOut" as const, delay },
-});
-
 const milestones = [
-  {
-    year: "2017",
-    icon: "🌱",
-    title: "Curiosity Sparked",
-    color: "#059669",
-    desc: "It started with nothing more than boredom and YouTube. I stumbled across a video of someone creating a logo in CorelDraw. I had no design background, no formal training — just a laptop, a free trial of CorelDraw, and a lot of curiosity. I spent the first few weeks just trying to understand how shapes, curves, and colours worked together.",
-  },
-  {
-    year: "2018",
-    icon: "🔤",
-    title: "First Logos & Lettermarks",
-    color: "#2563eb",
-    desc: "My first real designs were logos — simple wordmarks and lettermarks for imaginary brands I made up just to practice. CorelDraw's node editing became my obsession. I would spend hours adjusting bezier curves trying to get letterforms to look the way I wanted. Most of it was terrible, but it taught me that design is a craft — it takes repetition.",
-  },
-  {
-    year: "2019",
-    icon: "✏️",
-    title: "Flyers, Posters & Print",
-    color: "#d97706",
-    desc: "Churches, student groups, and small businesses started noticing my work and asking for flyers, event posters, and banners. I designed everything from Sunday service announcements to birthday graphics. This is where I learned layout, hierarchy, and how to make information feel organised and beautiful at the same time — before I even knew the terminology.",
-  },
-  {
-    year: "2020",
-    icon: "🎨",
-    title: "Discovering Photoshop",
-    color: "#7c3aed",
-    desc: "CorelDraw had taken me far, but I knew serious designers used Photoshop. I started over — new software, new logic. Photo manipulation, masking, layer blending, and compositing opened a completely different dimension of what design could be. My first Photoshop projects were rough, but the ceiling was suddenly much higher.",
-  },
-  {
-    year: "2021",
-    icon: "🏢",
-    title: "Brand Identity Work",
-    color: "#ec4899",
-    desc: "By this point I had done enough logos, flyers, and posters to understand that design is storytelling. Clients started coming to me for full brand identity work — logos, color systems, typography, business cards, and social media kits. I stopped designing in isolation and started asking: what does this brand want to communicate? Who is it speaking to?",
-  },
-  {
-    year: "2022–Present",
-    icon: "🚀",
-    title: "Designing Week In, Week Out",
-    color: "#06b6d4",
-    desc: "Design became a second profession alongside cloud engineering. I now produce event graphics, conference materials, brand identities, social media creatives, and print materials on a weekly basis — for ministries, businesses, startups, and individuals across Lagos and internationally. Photoshop and CorelDraw are permanent tools in my workflow, as natural to me as Terraform or Docker.",
-  },
+  { year:"2019", icon:"🌱", color:"#d97706", title:"Curiosity Sparked", desc:"YouTube, CorelDraw, and boredom. I watched someone build a logo and spent the next three hours trying to do the same. I failed. I tried again. I kept going." },
+  { year:"2020", icon:"🔤", color:"#a855f7", title:"Logos & Lettermarks", desc:"My first real design work — wordmarks and lettermarks for imaginary brands I created just to practice. CorelDraw's bezier curves became an obsession. Most of it was terrible. It taught me that design is a craft." },
+  { year:"2021", icon:"✏️", color:"#ec4899", title:"Flyers, Posters & Print", desc:"Churches, student groups, and small businesses started asking for work. Flyers, event posters, banners. I learned layout, hierarchy, and visual communication before I knew the terminology." },
+  { year:"2022", icon:"🎨", color:"#d97706", title:"Discovering Photoshop", desc:"A new dimension opened. Photo compositing, masking, layer blending. My ceiling suddenly became much higher." },
+  { year:"2023–Present", icon:"🚀", color:"#a855f7", title:"Designing Week In, Week Out", desc:"Event graphics, brand identities, social creatives, print materials — weekly, for real clients. Photoshop and CorelDraw are now as natural to me as a terminal prompt." },
 ];
 
 const categories = [
-  { icon: "🏷️", title: "Brand Identity & Logos",     desc: "Wordmarks, lettermarks, symbol marks, full brand guidelines" },
-  { icon: "🎪", title: "Event & Conference Graphics", desc: "Posters, banners, stage backdrops, programmes, badges" },
-  { icon: "📱", title: "Social Media Creatives",      desc: "Posts, stories, carousels, profile art, YouTube thumbnails" },
-  { icon: "🖨️", title: "Print Design",                desc: "Flyers, brochures, business cards, invitation cards, certificates" },
-  { icon: "✨", title: "Custom Illustrations",         desc: "Bespoke compositions, 3D text effects, digital artworks" },
-  { icon: "📺", title: "Digital & Screen Graphics",   desc: "Presentation decks, motion stills, digital ads" },
+  { icon:"🏷️", title:"Brand Identity & Logos",     desc:"Wordmarks, lettermarks, symbol marks, brand guidelines" },
+  { icon:"🎪", title:"Event & Conference Graphics",  desc:"Posters, banners, stage backdrops, programmes, badges" },
+  { icon:"📱", title:"Social Media Creatives",       desc:"Posts, stories, carousels, YouTube thumbnails, profile art" },
+  { icon:"🖨️", title:"Print Design",                desc:"Flyers, brochures, business cards, invitations, certificates" },
+  { icon:"✨", title:"Custom Illustrations",          desc:"3D text effects, bespoke compositions, digital artworks" },
+  { icon:"📺", title:"Digital & Screen Graphics",    desc:"Presentation decks, motion stills, digital ads" },
 ];
 
-export default function DesignPage() {
+export default function DesignWorld() {
+  const { theme } = useTheme();
+  const logoSrc = theme === "dark" ? "/jaa-logo-white.png" : "/jaa-logo-dark.png";
+
   return (
-    <>
-      <Navbar />
-      <main style={{ background: "var(--bg)", minHeight: "100vh", paddingTop: 68 }}>
+    <main style={{ minHeight:"100vh", background:"#0d0a14", color:"#faf0ff", fontFamily:"'DM Sans',sans-serif", overflowX:"hidden" }}>
 
-        {/* ── HERO ── */}
-        <section style={{ padding: "6rem 5% 4rem", position: "relative", overflow: "hidden", background: "var(--bg)" }}>
-          <div className="grid-bg" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />
-          <motion.div
-            animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.25, 0.5] }}
-            transition={{ duration: 10, repeat: Infinity }}
-            style={{ position: "absolute", top: -100, right: -100, width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, var(--cyan-dim), transparent 70%)", filter: "blur(80px)", pointerEvents: "none" }}
-          />
+      {/* ── NAV ── */}
+      <nav style={{
+        position:"fixed", top:0, left:0, right:0, zIndex:50,
+        padding:"0 5%", height:68, display:"flex", alignItems:"center", justifyContent:"space-between",
+        background:"rgba(13,10,20,0.9)", backdropFilter:"blur(20px)",
+        borderBottom:"1px solid rgba(168,85,247,0.2)",
+      }}>
+        <Link href="/" style={{ textDecoration:"none", display:"flex", alignItems:"center", cursor:"pointer", padding:"4px 0" }}>
+          <span style={{ pointerEvents:"none", display:"flex" }}>
+            <Image src="/jaa-logo-white.png" alt="JAA" width={64} height={30} style={{ objectFit:"contain", height:30, width:"auto" }} priority/>
+          </span>
+        </Link>
+        <div style={{ display:"flex", alignItems:"center", gap:"1.2rem" }}>
+          <Link href="/" style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"rgba(216,180,254,0.6)", textDecoration:"none", letterSpacing:"0.1em", textTransform:"uppercase", transition:"color 0.2s" }}
+            onMouseEnter={e=>(e.currentTarget.style.color="#d97706")}
+            onMouseLeave={e=>(e.currentTarget.style.color="rgba(216,180,254,0.6)")}>
+            ← All Worlds
+          </Link>
+        </div>
+      </nav>
 
-          <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
-            {/* Back link */}
-            <motion.div {...fadeUp(0)}>
-              <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", color: "var(--text3)", textDecoration: "none", letterSpacing: "0.06em", marginBottom: "2.5rem" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "var(--cyan)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--text3)")}>
-                <ArrowLeft size={14} /> Back to portfolio
-              </Link>
-            </motion.div>
+      {/* ── HERO ── */}
+      <section style={{ minHeight:"100vh", display:"flex", alignItems:"center", padding:"120px 5% 80px", position:"relative", overflow:"hidden" }}>
 
-            <motion.div {...fadeUp(0.1)} style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem" }}>
-              <span style={{ width: 24, height: 2, background: "var(--cyan)", display: "inline-block", borderRadius: 2 }} />
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", color: "var(--cyan)", letterSpacing: "0.18em", textTransform: "uppercase" }}>Design Portfolio</span>
-            </motion.div>
+        {/* Background paint strokes */}
+        <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse 100% 80% at 80% 20%, rgba(217,119,6,0.12), transparent 60%)", pointerEvents:"none" }}/>
+        <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse 80% 60% at 10% 80%, rgba(168,85,247,0.1), transparent 60%)", pointerEvents:"none" }}/>
+        {/* Grid */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(168,85,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,0.04) 1px,transparent 1px)", backgroundSize:"60px 60px", pointerEvents:"none" }}/>
 
-            <motion.h1 {...fadeUp(0.2)} style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(2.4rem,5vw,4.2rem)", fontWeight: 800, color: "var(--text)", lineHeight: 1.08, letterSpacing: "-0.035em", marginBottom: "1.5rem" }}>
-              The visual side<br />
-              <span className="text-gradient">of John.</span>
-            </motion.h1>
+        {/* Floating paint blobs */}
+        <motion.div animate={{ rotate:360, scale:[1,1.05,1] }} transition={{ rotate:{ duration:30, repeat:Infinity, ease:"linear" }, scale:{ duration:6, repeat:Infinity } }}
+          style={{ position:"absolute", top:"15%", right:"8%", width:280, height:280, borderRadius:"60% 40% 70% 30% / 40% 60% 30% 70%", background:"rgba(217,119,6,0.08)", filter:"blur(40px)", pointerEvents:"none" }}/>
+        <motion.div animate={{ rotate:-360, scale:[1,1.08,1] }} transition={{ rotate:{ duration:25, repeat:Infinity, ease:"linear" }, scale:{ duration:8, repeat:Infinity, delay:2 } }}
+          style={{ position:"absolute", bottom:"20%", left:"5%", width:200, height:200, borderRadius:"40% 60% 30% 70% / 60% 40% 70% 30%", background:"rgba(168,85,247,0.08)", filter:"blur(40px)", pointerEvents:"none" }}/>
 
-            <motion.p {...fadeUp(0.32)} style={{ fontSize: "1.05rem", color: "var(--text2)", maxWidth: 620, lineHeight: 1.85, fontWeight: 300, marginBottom: "2.5rem" }}>
-              From watching random YouTube tutorials out of boredom, to designing event graphics, brand identities, and print materials every single week — this is the story of how a Cloud Engineer became a graphic designer by accident, and never looked back.
-            </motion.p>
+        <div style={{ maxWidth:1200, margin:"0 auto", width:"100%", position:"relative", zIndex:1 }}>
+          <motion.div initial={{ opacity:0, y:32 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.8 }}>
 
-            {/* CTA row */}
-            <motion.div {...fadeUp(0.44)} style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-              <motion.a
-                whileHover={{ y: -2, boxShadow: "var(--shadow-cyan)" }}
-                href={DRIVE_URL}
-                target="_blank" rel="noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", padding: "0.9rem 2rem", background: "var(--cyan)", color: "#fff", fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.92rem", textDecoration: "none", borderRadius: "10px", boxShadow: "var(--shadow-cyan)" }}
-              >
-                <FolderOpen size={18} /> View Full Design Portfolio
+            <div style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"1.2rem" }}>
+              <span style={{ width:24, height:2, background:"#d97706", display:"inline-block", borderRadius:2 }}/>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"#d97706", letterSpacing:"0.2em", textTransform:"uppercase" }}>Design World</span>
+            </div>
+
+            <h1 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(2.8rem,7vw,5.5rem)", fontWeight:800, lineHeight:1.04, letterSpacing:"-0.04em", marginBottom:"1.5rem" }}>
+              <span style={{ color:"#faf0ff" }}>The visual</span><br/>
+              <span style={{ background:"linear-gradient(135deg,#d97706 30%,#a855f7 100%)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>side of John.</span>
+            </h1>
+
+            <p style={{ fontSize:"1.05rem", color:"rgba(250,240,255,0.65)", maxWidth:580, lineHeight:1.88, fontWeight:300, marginBottom:"2.5rem" }}>
+              From watching YouTube tutorials out of boredom to designing event graphics, brand identities, and print materials every single week — this is the story of how a Cloud Engineer became a graphic designer by accident, and never looked back.
+            </p>
+
+            {/* Available badge */}
+            <div style={{ display:"inline-flex", alignItems:"center", gap:"0.6rem", padding:"0.5rem 1.2rem", background:"rgba(217,119,6,0.12)", border:"1.5px solid rgba(217,119,6,0.3)", borderRadius:"100px", marginBottom:"2rem" }}>
+              <motion.span animate={{ opacity:[0.4,1,0.4] }} transition={{ duration:1.8, repeat:Infinity }}
+                style={{ width:7, height:7, borderRadius:"50%", background:"#d97706", display:"inline-block", flexShrink:0 }}/>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.65rem", color:"#d97706", letterSpacing:"0.12em", textTransform:"uppercase" }}>Available for design projects</span>
+            </div>
+
+            {/* CTA */}
+            <div style={{ display:"flex", flexWrap:"wrap", gap:"1rem" }}>
+              <motion.a whileHover={{ y:-3, boxShadow:"0 16px 50px rgba(217,119,6,0.4)" }}
+                href={DRIVE_URL} target="_blank" rel="noreferrer"
+                style={{ display:"inline-flex", alignItems:"center", gap:"0.6rem", padding:"1rem 2.2rem", background:"linear-gradient(135deg,#d97706,#b45309)", color:"#fff", fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"0.95rem", textDecoration:"none", borderRadius:"12px", boxShadow:"0 4px 24px rgba(217,119,6,0.3)" }}>
+                <FolderOpen size={18}/> View Full Portfolio
               </motion.a>
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="#contact-design"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", padding: "0.9rem 2rem", border: "1.5px solid var(--border)", color: "var(--text2)", fontFamily: "'Syne',sans-serif", fontWeight: 600, fontSize: "0.92rem", textDecoration: "none", borderRadius: "10px", background: "var(--surface)", boxShadow: "var(--shadow-sm)", transition: "all 0.2s" }}
-              >
+              <motion.a whileHover={{ y:-3 }} href="mailto:akinolajohnayomide@gmail.com"
+                style={{ display:"inline-flex", alignItems:"center", gap:"0.6rem", padding:"1rem 2.2rem", border:"1.5px solid rgba(168,85,247,0.4)", color:"#d8b4fe", fontFamily:"'Syne',sans-serif", fontWeight:600, fontSize:"0.95rem", textDecoration:"none", borderRadius:"12px", background:"rgba(168,85,247,0.06)", transition:"all 0.2s" }}>
                 Hire for Design Work
               </motion.a>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── THE STORY ── */}
-        <section style={{ padding: "5rem 5%", background: "var(--bg2)" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <motion.div {...fadeUp(0)} style={{ marginBottom: "4rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.8rem" }}>
-                <span style={{ width: 24, height: 2, background: "var(--cyan)", display: "inline-block", borderRadius: 2 }} />
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", color: "var(--cyan)", letterSpacing: "0.18em", textTransform: "uppercase" }}>The Origin Story</span>
-              </div>
-              <h2 style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(1.9rem,3.5vw,2.7rem)", fontWeight: 800, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
-                How curiosity became craft.
-              </h2>
-            </motion.div>
-
-            {/* Timeline */}
-            <div style={{ position: "relative" }}>
-              {/* Vertical line */}
-              <div style={{ position: "absolute", left: "calc(5% + 28px)", top: 0, bottom: 0, width: 2, background: "linear-gradient(to bottom, var(--cyan), transparent)", display: "none" }} className="timeline-line" />
-
-              <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-                {milestones.map((m, i) => (
-                  <motion.div
-                    key={m.year}
-                    initial={{ opacity: 0, x: -24 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.55, delay: i * 0.08 }}
-                    style={{ display: "flex", gap: "1.8rem", alignItems: "flex-start" }}
-                    className="story-row"
-                  >
-                    {/* Icon + year */}
-                    <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
-                      <div style={{ width: 56, height: 56, borderRadius: "14px", background: `${m.color}18`, border: `1.5px solid ${m.color}44`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", flexShrink: 0 }}>
-                        {m.icon}
-                      </div>
-                      <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", color: m.color, fontWeight: 700, letterSpacing: "0.06em" }}>{m.year}</span>
-                    </div>
-
-                    {/* Content */}
-                    <div style={{ flex: 1, padding: "1.4rem 1.6rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px", boxShadow: "var(--shadow-sm)" }}>
-                      <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "1.08rem", color: "var(--text)", marginBottom: "0.65rem" }}>
-                        {m.title}
-                      </h3>
-                      <p style={{ fontSize: "0.9rem", color: "var(--text2)", lineHeight: 1.82, fontWeight: 300 }}>
-                        {m.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </div>
-          </div>
-        </section>
+          </motion.div>
+        </div>
+      </section>
 
-        {/* ── WHAT I CREATE ── */}
-        <section style={{ padding: "5rem 5%", background: "var(--bg)" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <motion.div {...fadeUp(0)} style={{ marginBottom: "3.5rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.8rem" }}>
-                <span style={{ width: 24, height: 2, background: "var(--cyan)", display: "inline-block", borderRadius: 2 }} />
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", color: "var(--cyan)", letterSpacing: "0.18em", textTransform: "uppercase" }}>What I Create</span>
-              </div>
-              <h2 style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(1.9rem,3.5vw,2.7rem)", fontWeight: 800, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
-                Six categories.<br />All done with precision.
-              </h2>
-            </motion.div>
-
-            <div className="design-page-categories">
-              {categories.map((c, i) => (
-                <motion.div
-                  key={c.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.44, delay: i * 0.07 }}
-                  whileHover={{ y: -4, boxShadow: "var(--shadow-md)" }}
-                  style={{ padding: "1.5rem 1.6rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "14px", boxShadow: "var(--shadow-sm)", transition: "all 0.28s" }}
-                >
-                  <div style={{ fontSize: "1.8rem", marginBottom: "0.7rem" }}>{c.icon}</div>
-                  <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "1rem", color: "var(--text)", marginBottom: "0.45rem" }}>{c.title}</h3>
-                  <p style={{ fontSize: "0.83rem", color: "var(--text2)", lineHeight: 1.72, fontWeight: 300 }}>{c.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── TOOLS ── */}
-        <section style={{ padding: "4rem 5%", background: "var(--bg2)" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <motion.div {...fadeUp(0)} style={{ marginBottom: "2.5rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.7rem" }}>
-                <span style={{ width: 24, height: 2, background: "var(--cyan)", display: "inline-block", borderRadius: 2 }} />
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", color: "var(--cyan)", letterSpacing: "0.18em", textTransform: "uppercase" }}>Tools & Software</span>
-              </div>
-              <h2 style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(1.6rem,3vw,2.2rem)", fontWeight: 800, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.03em" }}>
-                The toolkit.
-              </h2>
-            </motion.div>
-
-            <div className="design-page-tools">
-              {[
-                { name: "Adobe Photoshop", level: "Advanced", color: "#31a8ff", icon: "Ps" },
-                { name: "CorelDRAW",       level: "Advanced", color: "#77bc1f", icon: "Cd" },
-                { name: "Adobe Illustrator", level: "Intermediate", color: "#ff9a00", icon: "Ai" },
-                { name: "Canva",           level: "Advanced", color: "#00c4cc", icon: "Ca" },
-              ].map((tool, i) => (
-                <motion.div
-                  key={tool.name}
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  whileHover={{ y: -3, boxShadow: "var(--shadow-md)" }}
-                  style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem 1.4rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px", boxShadow: "var(--shadow-sm)", transition: "all 0.28s", minWidth: 200 }}
-                >
-                  <div style={{ width: 40, height: 40, borderRadius: "10px", background: `${tool.color}22`, border: `1.5px solid ${tool.color}44`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "0.82rem", color: tool.color, flexShrink: 0 }}>
-                    {tool.icon}
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)" }}>{tool.name}</div>
-                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", color: tool.color, letterSpacing: "0.08em", marginTop: "0.1rem" }}>{tool.level}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── DRIVE CTA ── */}
-        <section style={{ padding: "5rem 5%", background: "var(--bg)" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="drive-cta" style={{ padding: "3.5rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "20px", boxShadow: "var(--shadow-md)", textAlign: "center", position: "relative", overflow: "hidden" }}
-            >
-              {/* Ambient glow */}
-              <div style={{ position: "absolute", top: -60, right: -60, width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, var(--cyan-dim), transparent 70%)", filter: "blur(60px)", pointerEvents: "none" }} />
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🎨</div>
-                <h2 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "clamp(1.6rem,3vw,2.2rem)", color: "var(--text)", marginBottom: "0.8rem", letterSpacing: "-0.02em" }}>
-                  See the actual work.
-                </h2>
-                <p style={{ fontSize: "0.97rem", color: "var(--text2)", maxWidth: 520, margin: "0 auto 2rem", lineHeight: 1.82, fontWeight: 300 }}>
-                  The full design portfolio lives on Google Drive — event flyers, brand identities, social media graphics, and print materials. Real work, real clients, real results.
-                </p>
-                <motion.a
-                  whileHover={{ y: -3, boxShadow: "0 20px 60px rgba(0,200,255,0.35)" }}
-                  whileTap={{ scale: 0.97 }}
-                  href={DRIVE_URL}
-                  target="_blank" rel="noreferrer"
-                  style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2.5rem", background: "var(--cyan)", color: "#fff", fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "1rem", textDecoration: "none", borderRadius: "10px", boxShadow: "var(--shadow-cyan)" }}
-                >
-                  <FolderOpen size={20} />
-                  Open Design Portfolio on Google Drive
-                  <ExternalLink size={16} />
-                </motion.a>
-                <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", marginTop: "1.2rem", letterSpacing: "0.05em" }}>
-                  Opens in a new tab · Google Drive · Public folder
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── HIRE ME ── */}
-        <section id="contact-design" style={{ padding: "4rem 5%", background: "var(--bg2)" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55 }}
-              className="hire-bar" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem", padding: "2rem 2.4rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px", boxShadow: "var(--shadow-sm)" }}
-            >
+      {/* ── TOOLS STRIP ── */}
+      <section style={{ padding:"2.5rem 5%", background:"rgba(168,85,247,0.06)", borderTop:"1px solid rgba(168,85,247,0.15)", borderBottom:"1px solid rgba(168,85,247,0.15)" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexWrap:"wrap", gap:"1rem", alignItems:"center", justifyContent:"center" }}>
+          {[
+            { name:"Adobe Photoshop", level:"Advanced", icon:"Ps", color:"#31a8ff" },
+            { name:"CorelDRAW",       level:"Advanced", icon:"Cd", color:"#77bc1f" },
+            { name:"Adobe Illustrator", level:"Intermediate", icon:"Ai", color:"#ff9a00" },
+            { name:"Canva",           level:"Advanced", icon:"Ca", color:"#00c4cc" },
+          ].map(t=>(
+            <motion.div key={t.name} whileHover={{ y:-3 }}
+              style={{ display:"flex", alignItems:"center", gap:"0.75rem", padding:"0.8rem 1.3rem", background:"rgba(13,10,20,0.8)", border:"1px solid rgba(168,85,247,0.2)", borderRadius:"12px" }}>
+              <div style={{ width:36, height:36, borderRadius:"8px", background:`${t.color}22`, border:`1.5px solid ${t.color}44`, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"0.75rem", color:t.color, flexShrink:0 }}>{t.icon}</div>
               <div>
-                <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: "1.2rem", color: "var(--text)", marginBottom: "0.35rem" }}>
-                  Need a designer?
-                </h3>
-                <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", color: "var(--text3)", letterSpacing: "0.04em" }}>
-                  Event graphics · Brand identity · Social media · Print · Flyers
-                </p>
-              </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem", alignItems: "center" }}>
-                <motion.a whileHover={{ y: -2 }} href="mailto:akinolajohnayomide@gmail.com"
-                  style={{ padding: "0.7rem 1.5rem", background: "var(--cyan)", color: "#fff", fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.88rem", textDecoration: "none", borderRadius: "8px", boxShadow: "var(--shadow-cyan)" }}>
-                  Email Me
-                </motion.a>
-                <Link href="/#contact"
-                  style={{ padding: "0.7rem 1.5rem", border: "1.5px solid var(--border)", color: "var(--text2)", fontFamily: "'Syne',sans-serif", fontWeight: 600, fontSize: "0.88rem", textDecoration: "none", borderRadius: "8px", background: "transparent", transition: "all 0.2s" }}>
-                  Contact Form →
-                </Link>
+                <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"0.88rem", color:"#faf0ff" }}>{t.name}</div>
+                <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.6rem", color:t.color, letterSpacing:"0.08em", marginTop:"0.1rem" }}>{t.level}</div>
               </div>
             </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── ORIGIN STORY ── */}
+      <section style={{ padding:"6rem 5%", background:"#0d0a14" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto" }}>
+          <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} style={{ marginBottom:"4rem" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"0.8rem" }}>
+              <span style={{ width:24, height:2, background:"#a855f7", display:"inline-block", borderRadius:2 }}/>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"#a855f7", letterSpacing:"0.18em", textTransform:"uppercase" }}>The Origin Story</span>
+            </div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:800, color:"#faf0ff", lineHeight:1.1, letterSpacing:"-0.03em" }}>
+              How curiosity became craft.
+            </h2>
+          </motion.div>
+
+          <div style={{ display:"flex", flexDirection:"column", gap:"2rem" }}>
+            {milestones.map((m,i)=>(
+              <motion.div key={m.year}
+                initial={{ opacity:0, x:-24 }} whileInView={{ opacity:1, x:0 }}
+                viewport={{ once:true }} transition={{ duration:0.55, delay:i*0.08 }}
+                style={{ display:"flex", gap:"1.8rem", alignItems:"flex-start" }}
+                className="story-row">
+                <div style={{ flexShrink:0, display:"flex", flexDirection:"column", alignItems:"center", gap:"0.4rem" }}>
+                  <div style={{ width:56, height:56, borderRadius:"14px", background:`${m.color}18`, border:`1.5px solid ${m.color}44`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"1.6rem" }}>{m.icon}</div>
+                  <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.58rem", color:m.color, fontWeight:700, letterSpacing:"0.06em", textAlign:"center", lineHeight:1.3 }}>{m.year}</span>
+                </div>
+                <div style={{ flex:1, padding:"1.4rem 1.6rem", background:"rgba(168,85,247,0.06)", border:"1px solid rgba(168,85,247,0.15)", borderRadius:"16px" }}>
+                  <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"1rem", color:"#faf0ff", marginBottom:"0.6rem" }}>{m.title}</h3>
+                  <p style={{ fontSize:"0.88rem", color:"rgba(250,240,255,0.65)", lineHeight:1.82, fontWeight:300 }}>{m.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-      </main>
-      <Footer />
+      {/* ── CATEGORIES ── */}
+      <section style={{ padding:"6rem 5%", background:"rgba(8,5,14,0.98)" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto" }}>
+          <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} style={{ marginBottom:"3.5rem" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"0.8rem" }}>
+              <span style={{ width:24, height:2, background:"#d97706", display:"inline-block", borderRadius:2 }}/>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"#d97706", letterSpacing:"0.18em", textTransform:"uppercase" }}>What I Create</span>
+            </div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:800, color:"#faf0ff", lineHeight:1.1, letterSpacing:"-0.03em" }}>
+              Six categories.<br/>All done with precision.
+            </h2>
+          </motion.div>
+          <div className="design-page-categories">
+            {categories.map((c,i)=>(
+              <motion.div key={c.title}
+                initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ duration:0.44, delay:i*0.07 }}
+                whileHover={{ y:-4, background:"rgba(217,119,6,0.08)", borderColor:"rgba(217,119,6,0.3)" }}
+                style={{ padding:"1.6rem", background:"rgba(168,85,247,0.05)", border:"1.5px solid rgba(168,85,247,0.15)", borderRadius:"14px", transition:"all 0.28s" }}>
+                <div style={{ fontSize:"1.8rem", marginBottom:"0.7rem" }}>{c.icon}</div>
+                <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"0.98rem", color:"#faf0ff", marginBottom:"0.4rem" }}>{c.title}</h3>
+                <p style={{ fontSize:"0.82rem", color:"rgba(250,240,255,0.55)", lineHeight:1.72, fontWeight:300 }}>{c.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <style jsx global>{`
-        @media (max-width: 640px) {
-          .story-row { flex-direction: column !important; }
-        }
-      `}</style>
-    </>
+      {/* ── BIG DRIVE CTA ── */}
+      <section style={{ padding:"6rem 5%", background:"#0d0a14", position:"relative", overflow:"hidden" }}>
+        <motion.div animate={{ scale:[1,1.1,1], opacity:[0.3,0.6,0.3] }} transition={{ duration:5, repeat:Infinity }}
+          style={{ position:"absolute", top:-80, left:"50%", transform:"translateX(-50%)", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle,rgba(217,119,6,0.15),transparent 70%)", filter:"blur(80px)", pointerEvents:"none" }}/>
+        <div style={{ maxWidth:700, margin:"0 auto", textAlign:"center", position:"relative", zIndex:1 }}>
+          <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}>
+            <div style={{ fontSize:"3.5rem", marginBottom:"1rem" }}>🎨</div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.6rem)", fontWeight:800, color:"#faf0ff", lineHeight:1.1, letterSpacing:"-0.03em", marginBottom:"0.8rem" }}>
+              See the actual work.
+            </h2>
+            <p style={{ fontSize:"0.97rem", color:"rgba(250,240,255,0.6)", maxWidth:500, margin:"0 auto 2rem", lineHeight:1.85, fontWeight:300 }}>
+              The full portfolio lives on Google Drive — event flyers, brand identities, social graphics, and print materials. Real work for real clients.
+            </p>
+            <motion.a whileHover={{ y:-3, boxShadow:"0 24px 70px rgba(217,119,6,0.4)" }}
+              href={DRIVE_URL} target="_blank" rel="noreferrer"
+              style={{ display:"inline-flex", alignItems:"center", gap:"0.6rem", padding:"1.1rem 2.8rem", background:"linear-gradient(135deg,#d97706,#b45309)", color:"#fff", fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"1rem", textDecoration:"none", borderRadius:"12px", boxShadow:"0 4px 24px rgba(217,119,6,0.3)" }}>
+              <FolderOpen size={20}/>
+              Open Design Portfolio
+              <ExternalLink size={16}/>
+            </motion.a>
+            <p style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.65rem", color:"rgba(250,240,255,0.3)", marginTop:"1rem", letterSpacing:"0.05em" }}>
+              Opens in new tab · Google Drive · Public folder
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ padding:"2rem 5%", background:"rgba(8,5,14,0.98)", borderTop:"1px solid rgba(168,85,247,0.15)", display:"flex", flexWrap:"wrap", alignItems:"center", justifyContent:"space-between", gap:"1rem" }}>
+        <Link href="/" style={{ textDecoration:"none" }}>
+          <Image src="/jaa-logo-white.png" alt="JAA" width={48} height={22} style={{ objectFit:"contain", height:22, width:"auto", opacity:0.6 }}/>
+        </Link>
+        <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"rgba(250,240,255,0.3)" }}>© 2026 · John Ayomide Akinola</span>
+        <Link href="/" style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"rgba(250,240,255,0.3)", textDecoration:"none", transition:"color 0.2s" }}
+          onMouseEnter={e=>(e.currentTarget.style.color="#d97706")}
+          onMouseLeave={e=>(e.currentTarget.style.color="rgba(250,240,255,0.3)")}>← All Worlds</Link>
+      </footer>
+    </main>
   );
 }

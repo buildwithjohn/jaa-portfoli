@@ -109,11 +109,14 @@ export default function MinistryWorld() {
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85 }}
                 style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem" }}>
-                <a href="#refuel" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.8rem", background: "#9f1239", color: "#fff", fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.9rem", textDecoration: "none", borderRadius: "10px", boxShadow: "0 4px 24px rgba(159,18,57,0.45)" }}>
+                <a href="https://www.therefuelexperience.live/" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.8rem", background: "#9f1239", color: "#fff", fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.9rem", textDecoration: "none", borderRadius: "10px", boxShadow: "0 4px 24px rgba(159,18,57,0.45)" }}>
                   🔥 The Refuel Experience
                 </a>
                 <a href="#expressions" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.8rem", border: "1.5px solid rgba(159,18,57,0.4)", color: "#fca5a5", fontFamily: "'Syne',sans-serif", fontWeight: 600, fontSize: "0.9rem", textDecoration: "none", borderRadius: "10px", background: "rgba(159,18,57,0.08)", transition: "all 0.2s" }}>
                   Ministry Expressions
+                </a>
+                <a href="https://www.instagram.com/pstjohnakinola/" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.8rem", border: "1.5px solid rgba(225,48,108,0.3)", color: "#e1306c", fontFamily: "'Syne',sans-serif", fontWeight: 600, fontSize: "0.9rem", textDecoration: "none", borderRadius: "10px", background: "rgba(225,48,108,0.06)", transition: "all 0.2s" }}>
+                  📸 @pstjohnakinola
                 </a>
               </motion.div>
             </div>
@@ -199,6 +202,93 @@ export default function MinistryWorld() {
               </p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+
+      {/* ── THE GOSPEL ── */}
+      <section style={{ padding: "6rem 5%", background: "#080103", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(159,18,57,0.08) 1px,transparent 1px)", backgroundSize: "30px 30px", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} style={{ marginBottom:"3.5rem" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"0.8rem" }}>
+              <span style={{ width:24, height:2, background:"#d97706", display:"inline-block", borderRadius:2 }}/>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"#d97706", letterSpacing:"0.18em", textTransform:"uppercase" }}>The Gospel</span>
+            </div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:800, color:"#fef2f2", lineHeight:1.1, letterSpacing:"-0.03em", marginBottom:"1.2rem" }}>
+              The good news of<br/>Jesus Christ.
+            </h2>
+            <p style={{ fontSize:"1rem", color:"rgba(254,202,202,0.8)", maxWidth:680, lineHeight:1.88, fontWeight:300 }}>
+              At the heart of everything John Ayomide Akinola teaches is one message — the gospel of Jesus Christ. Not religion. Not ritual. The good news that God became man, died for the sins of humanity, rose from the dead, and offers new life to all who believe. This is the foundation. Everything else is built on this.
+            </p>
+          </motion.div>
+
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1.5rem" }} className="about-grid">
+            <motion.div initial={{ opacity:0, x:-20 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }}
+              style={{ padding:"2.5rem", background:"rgba(159,18,57,0.08)", border:"1.5px solid rgba(159,18,57,0.25)", borderRadius:"20px" }}>
+              <div style={{ fontSize:"2rem", marginBottom:"1rem" }}>✝️</div>
+              <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"1.2rem", color:"#fef2f2", marginBottom:"1rem" }}>The Message</h3>
+              <p style={{ fontSize:"0.88rem", color:"rgba(254,202,202,0.8)", lineHeight:1.88, fontWeight:300 }}>
+                God so loved the world that He gave His only Son, that whoever believes in Him should not perish but have everlasting life. <em style={{ color:"#d97706" }}>— John 3:16</em>
+              </p>
+              <div style={{ margin:"1.2rem 0", height:1, background:"rgba(159,18,57,0.3)" }}/>
+              <p style={{ fontSize:"0.88rem", color:"rgba(254,202,202,0.8)", lineHeight:1.88, fontWeight:300 }}>
+                Jesus said to him, "I am the way, the truth, and the life. No one comes to the Father except through Me." <em style={{ color:"#d97706" }}>— John 14:6</em>
+              </p>
+            </motion.div>
+            <motion.div initial={{ opacity:0, x:20 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }}
+              style={{ padding:"2.5rem", background:"rgba(217,119,6,0.06)", border:"1.5px solid rgba(217,119,6,0.2)", borderRadius:"20px" }}>
+              <div style={{ fontSize:"2rem", marginBottom:"1rem" }}>📖</div>
+              <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"1.2rem", color:"#fef2f2", marginBottom:"1rem" }}>The Call</h3>
+              <p style={{ fontSize:"0.88rem", color:"rgba(254,202,202,0.8)", lineHeight:1.88, fontWeight:300 }}>
+                If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved. <em style={{ color:"#d97706" }}>— Romans 10:9</em>
+              </p>
+              <div style={{ margin:"1.2rem 0", height:1, background:"rgba(217,119,6,0.2)" }}/>
+              <p style={{ fontSize:"0.88rem", color:"rgba(254,202,202,0.8)", lineHeight:1.88, fontWeight:300 }}>
+                New life in Christ is available to every person — regardless of background, history, or religious tradition. The door is open.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── DOCTRINE ARTICLES ── */}
+      <section id="articles" style={{ padding: "6rem 5%", background: "rgba(10,2,6,0.98)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} style={{ marginBottom:"3rem" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:"0.7rem", marginBottom:"0.8rem" }}>
+              <span style={{ width:24, height:2, background:"#9f1239", display:"inline-block", borderRadius:2 }}/>
+              <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:"#f87171", letterSpacing:"0.18em", textTransform:"uppercase" }}>Doctrine & Teaching</span>
+            </div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:800, color:"#fef2f2", lineHeight:1.1, letterSpacing:"-0.03em" }}>
+              Articles on the<br/>doctrines of Christ.
+            </h2>
+          </motion.div>
+
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:"1.3rem" }}>
+            {[
+              { icon:"🕊️", title:"Understanding Grace", tag:"New Covenant", excerpt:"Grace is not a licence to sin — it is the power of God that empowers you to live above sin. Understanding the true nature of grace transforms how you walk with God.", color:"#9f1239" },
+              { icon:"👑", title:"Who You Are in Christ", tag:"Identity", excerpt:"Your identity is not determined by your past, your failures, or what people say about you. It is settled by what God says — you are a new creation, righteous, accepted, and loved.", color:"#d97706" },
+              { icon:"🔥", title:"The Ministry of the Holy Spirit", tag:"Holy Spirit", excerpt:"The Holy Spirit is not a theory or a feeling. He is a Person who leads, empowers, teaches, and transforms every believer who yields to Him. Walking in the Spirit is essential.", color:"#9f1239" },
+              { icon:"📜", title:"Salvation — What it Really Means", tag:"Salvation", excerpt:"Salvation is more than going to heaven when you die. It is a complete package — forgiveness, righteousness, deliverance, healing, and new life — all given freely through faith.", color:"#d97706" },
+              { icon:"🙏", title:"Prayer — The Believer's Communion", tag:"Prayer", excerpt:"Prayer is not a performance or a formula. It is the believer's intimate communion with the Father — a conversation, a lifestyle, a place of encounter with the living God.", color:"#9f1239" },
+              { icon:"📖", title:"The Integrity of God's Word", tag:"Scripture", excerpt:"The Bible is not merely a good book — it is the living Word of God, inspired, infallible, and eternally relevant. Building on it is building on the only unshakeable foundation.", color:"#d97706" },
+            ].map((a,i)=>(
+              <motion.div key={a.title}
+                initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ duration:0.5, delay:i*0.08 }}
+                whileHover={{ y:-4, borderColor:"rgba(159,18,57,0.5)" }}
+                style={{ padding:"1.8rem", borderRadius:"16px", background:"rgba(159,18,57,0.06)", border:`1.5px solid rgba(159,18,57,0.18)`, transition:"all 0.28s", cursor:"pointer" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:"0.6rem", marginBottom:"0.9rem" }}>
+                  <span style={{ fontSize:"1.5rem" }}>{a.icon}</span>
+                  <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.6rem", color:a.color, letterSpacing:"0.1em", textTransform:"uppercase", padding:"0.2rem 0.6rem", background:`${a.color}18`, borderRadius:"5px" }}>{a.tag}</span>
+                </div>
+                <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"1rem", color:"#fef2f2", marginBottom:"0.6rem" }}>{a.title}</h3>
+                <p style={{ fontSize:"0.84rem", color:"rgba(254,202,202,0.7)", lineHeight:1.78, fontWeight:300 }}>{a.excerpt}</p>
+                <div style={{ marginTop:"1.1rem", fontFamily:"'JetBrains Mono',monospace", fontSize:"0.68rem", color:a.color }}>Read Article →</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
