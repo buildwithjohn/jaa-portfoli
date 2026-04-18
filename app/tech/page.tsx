@@ -17,22 +17,24 @@ const skills = [
 ];
 
 const projects = [
-  { title:"QuickBites",              cat:"Platform Engineering", tags:["Node.js","Kubernetes","Prometheus","GitHub Actions","PostgreSQL"],    desc:"Production microservices food delivery platform — 5 services, full K8s orchestration, Prometheus/Grafana observability, automated CI/CD.",  link:"https://github.com/buildwithjohn" },
-  { title:"AfriMart DevOps Capstone",cat:"Platform Engineering", tags:["Terraform","Ansible","Docker","Jenkins","Kubernetes"],                 desc:"4-week DevOps curriculum capstone — full IaC with Terraform, Ansible config management, Jenkins pipelines, Kubernetes deployment.",          link:"https://github.com/buildwithjohn" },
-  { title:"PaySecure Bank",          cat:"Cybersecurity",        tags:["PHP","MySQL","Docker","OWASP","Pen Testing"],                          desc:"Deliberately vulnerable banking app with 20+ OWASP vulnerabilities — built as a cybersecurity capstone for ethical hacking training.",         link:"https://github.com/buildwithjohn" },
-  { title:"AssetGPT — Dubai Edge",   cat:"Prompt Engineering",   tags:["AI/ML","Middleware","SaaS","LLM","Dubai","PropTech"],                  desc:"B2B AI middleware for Dubai's 30,000+ licensed brokers — aggregates DLD, RERA, Ejari data into AI-generated investor-grade reports.",     link:"#contact" },
-  { title:"Cedar Home Builder",       cat:"Full-Stack",           tags:["Vue 3","Leaflet.js","Geo-referencing","Vite","Vercel"],                desc:"Diaspora-focused proptech with interactive Leaflet maps, geo-referenced site data, drone footage integration, and calendar booking.",      link:"https://github.com/buildwithjohn/cedar-africa" },
-  { title:"My Africa Family",        cat:"Full-Stack",            tags:["React","Supabase","Realtime","Social","Diaspora"],                     desc:"Social networking platform for Africans abroad — realtime posts, messaging, stories, friend requests, and notifications.",               link:"https://github.com/buildwithjohn" },
-  { title:"BloomyLMS",               cat:"Platform Engineering", tags:["Next.js","Neon PostgreSQL","NextAuth","AWS S3","Full-Stack"],           desc:"End-to-end Learning Management System — course delivery, student onboarding, progress tracking, cohort management, instructor dashboard.",  link:"https://github.com/buildwithjohn" },
-  { title:"Rev. Gbola Ministry Site",cat:"Web Dev",               tags:["React","TypeScript","Tailwind","Framer Motion","Vercel"],             desc:"Full ministry website — multiple pages, sermon media, events, and giving integration.",                                                    link:"https://github.com/buildwithjohn/gbola" },
-  { title:"Adefare Emmanuel Ministries",cat:"Web Dev",            tags:["React","TypeScript","Tailwind","React Router"],                        desc:"10-page ministry website with Framer Motion animations, testimonials, events, sermons, and partner pages.",                              link:"https://github.com/buildwithjohn/adefare-emmanuel" },
-  { title:"The Refuel Experience",   cat:"Web Dev",               tags:["React","Tailwind","Web3Forms","Google Apps Script"],                   desc:"Annual conference website with registration, automated email reminders, and volunteer systems. Live event.",                              link:"#" },
-  { title:"PrexyLab",                cat:"EdTech",                tags:["React","Monaco Editor","Firebase","Vite"],                             desc:"Collaborative coding lab — Monaco Editor for real-time code editing, Firebase sync for multi-user live collaboration in classes.",         link:"https://github.com/buildwithjohn" },
-  { title:"Campus Discipleship Network",cat:"Web Dev",            tags:["Next.js","Tailwind","SPA","Vercel"],                                  desc:"Full React SPA for a Christian campus discipleship movement — curriculum, chapter registration, and resource library.",                    link:"https://github.com/buildwithjohn" },
-  { title:"Mojis Mattel",            cat:"E-commerce",            tags:["React","Vercel","E-commerce","Amsterdam"],                            desc:"Amsterdam-based sustainable jewellery social enterprise — product listings, cart, and training booking. European client.",               link:"#" },
-  { title:"CrimsonWings Plasma Biologics",cat:"Web Dev",          tags:["React","Tailwind","Investor","Biotech","Healthcare"],                  desc:"Investor-focused single-page website for West Africa's first Plasma Fractionation Plant.",                                               link:"#" },
-  { title:"Sons & Daughters LMS",    cat:"Platform Engineering", tags:["Next.js","Supabase","YouTube API","Role-Based Access","Certificates"], desc:"Full LMS for a prophetic training school — role-based access, YouTube-hosted video, certificate generation, and curriculum management.",   link:"https://github.com/buildwithjohn" },
-  { title:"KGB Blackstone Ltd",      cat:"Web Dev",               tags:["React","Next.js","Tailwind","Ready Mix Concrete"],                    desc:"Corporate website for a ready-mix concrete company — product catalogue, project showcase, and enquiry system.",                          link:"https://github.com/buildwithjohn" },
+  /* ── Fullstack & Frontend ─────────────────────────── */
+  { title:"S&D Prophetic School LMS",         cat:"Fullstack · LMS",        tags:["Next.js 15","Supabase","Role-Based Auth","Admin Portal","Student Portal"],  desc:"Full learning management system — student and admin portals, role-based auth, progress tracking, and curriculum management.", github:"https://github.com/buildwithjohn/sandd",         live:"https://sandd.abiodunsule.uk" },
+  { title:"CrimsonWings Blood Logistics",      cat:"Fullstack · Dashboard",  tags:["Next.js 15","Full-Stack","Operations Dashboard","Marketing Site"],            desc:"Marketing site and internal operations dashboard for a blood logistics company — client-facing and back-office in one platform.", github:"https://github.com/buildwithjohn/crimson",       live:null },
+  { title:"Cedar Home Builder",                cat:"Fullstack · PropTech",   tags:["Vue 3","Leaflet.js","Geo-referencing","Vite","Vercel"],                       desc:"Diaspora-focused real estate SPA — interactive Leaflet maps, geo-referenced site data, drone footage, and calendar booking.", github:"https://github.com/Johnprexy/cedar-africa",     live:"https://cedar-africa.vercel.app" },
+  { title:"Dokun Idowu Ministry Site",         cat:"Frontend · CMS",        tags:["Next.js 14","Sanity CMS","Vercel","TypeScript"],                               desc:"Ministry website with Sanity CMS for dynamic content — sermons, events, and blog posts managed without touching code.", github:"https://github.com/buildwithjohn/dokun_idowu",   live:null },
+  { title:"Gbola Oladosu Ministry Site",        cat:"Frontend",              tags:["React","Vite","TypeScript","Tailwind","Framer Motion"],                        desc:"Clean ministry SPA with sermon media, events, giving integration, and animated page transitions.", github:"https://github.com/buildwithjohn/gbola",         live:null },
+  { title:"Dr. Kunle Hamilton Ministry Site",   cat:"Frontend",              tags:["React","Vite","Framer Motion","Cinematic Design"],                             desc:"Cinematic hero design ministry site — full-bleed photography, editorial typography, and immersive scroll animations.", github:"https://github.com/Johnprexy/dkh",              live:null },
+  { title:"Mojis Mattel Jewelry Store",         cat:"E-commerce · Frontend", tags:["React","Tailwind","E-commerce","Amsterdam","Booking"],                        desc:"Sustainable jewellery e-commerce SPA for an Amsterdam client — product listings, cart, and training session booking.", github:"https://github.com/buildwithjohn",               live:null },
+  { title:"My Africa Family",                   cat:"Fullstack · Social",    tags:["React","Supabase","Realtime","Social Network"],                                desc:"Social networking platform for the African diaspora — realtime posts, messaging, stories, friend requests, and notifications.", github:"https://github.com/buildwithjohn",               live:null },
+  { title:"JAA Portfolio",                      cat:"Frontend",              tags:["Next.js","Framer Motion","Five-World Portal","TypeScript"],                    desc:"This portfolio — five-world-portal personal universe concept built in Next.js with animated world transitions.", github:"https://github.com/Johnprexy/jaa-portfoli",     live:"https://www.johnakinola.com" },
+  /* ── Platform Engineering ─────────────────────────── */
+  { title:"QuickBites",                         cat:"Platform Engineering",  tags:["Node.js","Kubernetes","Prometheus","Grafana","GitHub Actions","PostgreSQL"],  desc:"Production microservices food delivery platform — 5 Node.js services, full K8s orchestration, Prometheus observability.", github:"https://github.com/buildwithjohn",               live:null },
+  { title:"AfriMart DevOps Capstone",           cat:"Platform Engineering",  tags:["Terraform","Ansible","Docker","Jenkins","Kubernetes","IaC"],                   desc:"4-week DevOps curriculum capstone — Terraform IaC, Ansible config management, Jenkins pipelines, Kubernetes deployment.", github:"https://github.com/buildwithjohn",               live:null },
+  { title:"PaySecure Bank",                     cat:"Cybersecurity",         tags:["PHP","MySQL","Docker","OWASP","Pen Testing"],                                  desc:"Deliberately vulnerable banking app with 20+ OWASP vulnerabilities — built as a cybersecurity capstone for ethical hacking training.", github:"https://github.com/buildwithjohn",               live:null },
+  { title:"AssetGPT — Dubai Edge",              cat:"Prompt Engineering",    tags:["AI/ML","Middleware","SaaS","LLM","Dubai","PropTech"],                          desc:"B2B AI middleware for Dubai's 30,000+ licensed brokers — aggregates DLD, RERA, Ejari data into AI-generated investor reports.", github:"#",                                            live:null },
+  { title:"BloomyLMS",                          cat:"Platform Engineering",  tags:["Next.js","Neon PostgreSQL","NextAuth","AWS S3","Full-Stack"],                  desc:"End-to-end Learning Management System — course delivery, student onboarding, progress tracking, and instructor dashboard.", github:"https://github.com/buildwithjohn",               live:null },
+  { title:"The Refuel Experience",              cat:"Frontend",              tags:["React","Tailwind","Web3Forms","Google Apps Script"],                            desc:"Annual revival conference website — registration flow, automated email reminders, and volunteer management. Live event.", github:"https://github.com/buildwithjohn",               live:"https://www.therefuelexperience.live" },
+  { title:"Campus Discipleship Network",        cat:"Frontend",              tags:["Next.js","Tailwind","SPA","Vercel"],                                            desc:"React SPA for a campus Christian discipleship movement — curriculum, chapter registration, resource library, and routing.", github:"https://github.com/buildwithjohn",               live:null },
 ];
 
 const certs = [
@@ -55,14 +57,14 @@ export default function TechPage() {
               <Image src="/john.jpg" alt="John" width={40} height={40} style={{ borderRadius:"50%", objectFit:"cover", objectPosition:"center 18%", border:"1.5px solid var(--border)", flexShrink:0 }}/>
               <div>
                 <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"0.95rem", color:"var(--text)" }}>John Ayomide Akinola</div>
-                <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.62rem", color:"var(--text3)" }}>Platform Engineer · Cloud Architect · DevOps Instructor</div>
+                <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.62rem", color:"var(--text3)" }}>Fullstack Engineer · Cloud · DevOps · Educator</div>
               </div>
             </div>
             <h1 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,4vw,2.8rem)", fontWeight:800, color:"var(--text)", lineHeight:1.1, letterSpacing:"-0.03em", marginBottom:"0.8rem" }}>
               16 platforms shipped.<br/>All in production.
             </h1>
             <p className="prose" style={{ maxWidth:560, marginBottom:"1.5rem" }}>
-              Platform & Cloud Infrastructure Engineer with hands-on experience across AWS, Kubernetes, Terraform, Docker, and CI/CD pipelines. Every project below was built for a real client or a real use case. No tutorial projects.
+              Fullstack Software Engineer with 6+ years building production-grade web applications, platforms, and client sites end to end. I work with startups, agencies, and product teams — React, Next.js, Vue 3, Node.js, Supabase, and cloud infrastructure on AWS. Every project below is real and shipped.
             </p>
             <div style={{ display:"flex", flexWrap:"wrap", gap:"0.6rem" }}>
               <motion.a whileHover={{ y:-1 }} href="#contact"
@@ -131,21 +133,22 @@ export default function TechPage() {
           <div style={{ display:"flex", flexDirection:"column", gap:"0.7rem" }}>
             {projects.map((p,i)=>(
               <motion.div key={p.title} {...fade(i*0.03)}>
-                <a href={p.link} target={p.link.startsWith("http")?"_blank":undefined} rel="noreferrer" style={{ textDecoration:"none", display:"block" }}>
-                  <div className="hover-card" style={{ padding:"1rem 1.1rem", background:"var(--surface)", border:"1px solid var(--border)", borderRadius:"10px" }}>
+                <div className="hover-card" style={{ padding:"1rem 1.1rem", background:"var(--surface)", border:"1px solid var(--border)", borderRadius:"10px" }}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"0.35rem", gap:"0.5rem" }}>
                       <div>
                         <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"0.9rem", color:"var(--text)", lineHeight:1.3 }}>{p.title}</h3>
                         <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.58rem", color:"var(--text3)", letterSpacing:"0.06em" }}>{p.cat}</span>
                       </div>
-                      {p.link.startsWith("http") ? <Github size={14} style={{ color:"var(--text3)", flexShrink:0, marginTop:2 }}/> : <ExternalLink size={14} style={{ color:"var(--text3)", flexShrink:0, marginTop:2 }}/>}
+                      <div style={{ display:"flex", gap:"0.35rem", flexShrink:0, flexWrap:"wrap", justifyContent:"flex-end" }}>
+                        {p.live && <a href={p.live} target="_blank" rel="noreferrer" style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.58rem", color:"var(--green)", textDecoration:"none", border:"1px solid var(--border)", borderRadius:"4px", padding:"0.12rem 0.45rem", whiteSpace:"nowrap" }}>Live ↗</a>}
+                        {p.github !== "#" && <a href={p.github} target="_blank" rel="noreferrer" style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.58rem", color:"var(--text3)", textDecoration:"none", border:"1px solid var(--border)", borderRadius:"4px", padding:"0.12rem 0.45rem", display:"inline-flex", alignItems:"center", gap:"0.25rem", whiteSpace:"nowrap" }}><Github size={10}/>GitHub</a>}
+                      </div>
                     </div>
                     <p style={{ fontSize:"0.81rem", color:"var(--text2)", lineHeight:1.65, fontWeight:300, marginBottom:"0.6rem" }}>{p.desc}</p>
                     <div style={{ display:"flex", flexWrap:"wrap", gap:"0.35rem" }}>
                       {p.tags.map(t=><span key={t} className="tag">{t}</span>)}
                     </div>
                   </div>
-                </a>
               </motion.div>
             ))}
           </div>

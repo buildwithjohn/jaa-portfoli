@@ -14,10 +14,10 @@ const featured_posts = [
 ];
 
 const featured_projects = [
-  { title: "AssetGPT — Dubai Edge",     desc: "B2B AI middleware for Dubai's 30,000+ real estate brokers. Aggregates DLD, RERA, and Ejari data into investor-grade intelligence reports.", tags: ["AI","Middleware","SaaS","Dubai"] },
-  { title: "BloomyLMS",                 desc: "End-to-end Learning Management System — course delivery, student onboarding, progress tracking, and instructor dashboard.", tags: ["Next.js","Supabase","AWS S3","Full-Stack"] },
-  { title: "Cedar Home Builder",         desc: "Diaspora-focused proptech platform with interactive Leaflet maps, geo-referenced site data, and calendar booking for Nigerians abroad.", tags: ["Vue 3","Leaflet.js","Geo","Vite"] },
-  { title: "PaySecure Bank",             desc: "Deliberately vulnerable banking app with 20+ documented OWASP vulnerabilities — built as a cybersecurity capstone for ethical hacking training.", tags: ["PHP","Docker","OWASP","Cybersecurity"] },
+  { title: "S&D Prophetic School LMS",    desc: "Full LMS with role-based auth, student and admin portals, progress tracking, and curriculum management. Live in production.", tags: ["Next.js 15","Supabase","Role-Based Auth","Full-Stack"], github: "https://github.com/buildwithjohn/sandd", live: "https://sandd.abiodunsule.uk" },
+  { title: "CrimsonWings Blood Logistics", desc: "Marketing site and operations dashboard for a blood logistics company — fullstack, client-facing and internal tools in one platform.", tags: ["Next.js 15","Full-Stack","Dashboard","Logistics"], github: "https://github.com/buildwithjohn/crimson", live: null },
+  { title: "Cedar Home Builder",           desc: "Diaspora-focused real estate platform with interactive maps, geo-referenced site data, drone footage, and calendar booking.", tags: ["Vue 3","Leaflet.js","Vite","Vercel"], github: "https://github.com/Johnprexy/cedar-africa", live: "https://cedar-africa.vercel.app" },
+  { title: "My Africa Family",             desc: "Social networking platform for Africans abroad — realtime posts, messaging, stories, friend requests, and notifications.", tags: ["React","Supabase","Realtime","Full-Stack"], github: "https://github.com/buildwithjohn", live: null },
 ];
 
 const socials = [
@@ -56,7 +56,7 @@ export default function Home() {
                 John Ayomide Akinola
               </h1>
               <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", color: "var(--text2)", marginTop: "0.25rem", letterSpacing: "0.04em" }}>
-                Platform Engineer · Educator · Author
+                Fullstack Engineer · Cloud · Educator · Author
               </p>
             </div>
           </motion.div>
@@ -170,18 +170,19 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {featured_projects.map(p => (
-                <Link key={p.title} href="/tech" style={{ textDecoration: "none", display: "block" }}>
-                  <div className="hover-card" style={{ padding: "1rem 1.1rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "10px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem", gap: "0.5rem" }}>
-                      <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)", lineHeight: 1.3 }}>{p.title}</h3>
-                      <ArrowUpRight size={14} style={{ color: "var(--text3)", flexShrink: 0, marginTop: 2 }} />
-                    </div>
-                    <p style={{ fontSize: "0.82rem", color: "var(--text2)", lineHeight: 1.65, fontWeight: 300, marginBottom: "0.65rem" }}>{p.desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                      {p.tags.map(t => <span key={t} className="tag">{t}</span>)}
+                <div key={p.title} className="hover-card" style={{ padding: "1rem 1.1rem", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "10px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem", gap: "0.5rem" }}>
+                    <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "var(--text)", lineHeight: 1.3 }}>{p.title}</h3>
+                    <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
+                      {p.live && <a href={p.live} target="_blank" rel="noreferrer" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.58rem", color: "var(--green)", textDecoration: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "0.12rem 0.45rem" }}>Live ↗</a>}
+                      <a href={p.github} target="_blank" rel="noreferrer" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.58rem", color: "var(--text3)", textDecoration: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "0.12rem 0.45rem" }}>GitHub</a>
                     </div>
                   </div>
-                </Link>
+                  <p style={{ fontSize: "0.82rem", color: "var(--text2)", lineHeight: 1.65, fontWeight: 300, marginBottom: "0.65rem" }}>{p.desc}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                    {p.tags.map(t => <span key={t} className="tag">{t}</span>)}
+                  </div>
+                </div>
               ))}
             </div>
           </motion.div>
