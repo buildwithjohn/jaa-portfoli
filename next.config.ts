@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Ensure dynamic routes are included
+  trailingSlash: false,
 };
 
 export default nextConfig;
