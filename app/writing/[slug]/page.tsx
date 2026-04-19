@@ -77,41 +77,39 @@ The lesson is not just "set memory limits." It is layered.
 
 <h2>Resource limits are not optional</h2>
 
-Every workload needs <code>requests</code> and <code>limits</code> set on both CPU and memory. <code>requests</code> is what Kubernetes uses to schedule a pod onto a node — the scheduler finds a node with enough available resources to satisfy the request. <code>limits</code> is the ceiling the container cannot exceed.
+Every workload needs <code>requests</code> and <code>limits</code> set on both CPU and memory. <code>requests</code> is what Kubernetes uses to schedule a pod onto a node. <code>limits</code> is the ceiling the container cannot exceed.
 
-If you set no memory limit, a single container can consume the entire node's memory. Every other pod on that node gets evicted or killed. Set limits conservatively based on what your application actually uses under real load, not what you guess it might need.
+If you set no memory limit, a single container can consume the entire node's memory. Every other pod on that node gets evicted or killed. Set limits based on what your application actually uses under real load, not what you guess it might need.
 
 <h2>Readiness and liveness probes do different jobs</h2>
 
 A pod in the Running state does not mean your application is serving traffic. It means the container process started. Those are different things.
 
-Readiness probes tell Kubernetes when a pod is actually ready to receive traffic. Without them, a pod can be Running, registered behind a Service, and returning errors because the application inside it has not finished initialising. Traffic hits it before it is ready.
+Readiness probes tell Kubernetes when a pod is actually ready to receive traffic. Without them, a pod can be Running, registered behind a Service, and returning errors because the application inside it has not finished initialising.
 
-Liveness probes tell Kubernetes when a pod needs to be restarted. A deadlocked application that is technically still running will sit there indefinitely without a liveness probe, appearing healthy in the cluster while serving nothing useful.
+Liveness probes tell Kubernetes when a pod needs to be restarted. A deadlocked application that is technically still running will sit there indefinitely without a liveness probe, appearing healthy while serving nothing useful.
 
-Both probes should check something real. An HTTP endpoint that actually exercises the application, not just a process check that confirms the container is alive.
+Both probes should check something real — an HTTP endpoint that actually exercises the application, not just a process check.
 
 <h2>Namespaces are organisation, not security</h2>
 
-Pods in different namespaces on the same cluster can communicate with each other by default. A compromised workload in one namespace can reach services in another namespace unless explicit NetworkPolicy rules prevent it.
+Pods in different namespaces on the same cluster can communicate with each other by default. A compromised workload in one namespace can reach services in another unless explicit NetworkPolicy rules prevent it.
 
-If you need real isolation between workloads — separate environments, different clients, different risk profiles — that isolation requires NetworkPolicy, or separate clusters entirely. Namespaces alone do not provide it.
+If you need real isolation between workloads — separate environments, different clients, different risk profiles — that requires NetworkPolicy, or separate clusters entirely. Namespaces alone do not provide it.
 
 <h2>etcd is the cluster. Back it up.</h2>
 
-Everything about your Kubernetes cluster — every Deployment, every Secret, every ConfigMap, every configuration of every resource — is stored in etcd. If etcd is lost without a backup, the cluster is gone.
+Everything about your Kubernetes cluster — every Deployment, every Secret, every ConfigMap — is stored in etcd. If etcd is lost without a backup, the cluster is gone.
 
-Back up etcd regularly and test the restore. A backup you have never restored is a backup you do not actually have. You will not know it is broken until the moment you need it most.
+Back up etcd regularly and test the restore. A backup you have never restored is a backup you do not actually have.
 
 <h2>Monitoring is not optional — it is the job</h2>
 
-The memory incident I described at the start was preventable. Not because the memory issue could have been avoided entirely, but because monitoring that was properly configured would have alerted before the node was full, before pods started getting evicted, before users saw anything at all.
+The memory incident I described at the start was preventable. Monitoring that was properly configured would have alerted before the node was full, before pods started getting evicted, before users saw anything at all.
 
 You need alerts on node memory and CPU utilisation, pod restart counts, failed deployments, and pending pods that cannot be scheduled. You need to know at 70% memory, not at 100%.
 
-Prometheus and Grafana are the standard tooling for a reason. The implementation takes time to set up correctly. That time is worth spending before the incident, not after.
-
-These lessons all came from real production work. The cluster will surprise you. The difference between an incident and an outage is often just how well you can see what is happening before it becomes one.
+Prometheus and Grafana are the standard tooling. The implementation takes time to set up correctly. That time is worth spending before the incident, not after.
     `,
   },
 
@@ -131,9 +129,9 @@ These five lessons came from real IaC work across real projects.
 
 Terraform state is the record of what Terraform believes exists in your infrastructure. If state is wrong, Terraform makes wrong decisions. If state is lost, Terraform no longer knows what it manages.
 
-Never store state locally for anything beyond a personal experiment. Use remote state. On AWS, that means S3 for storage and a DynamoDB table for locking. The locking is the part people skip and then regret — it prevents two concurrent <code>terraform apply</code> runs from corrupting the state file simultaneously.
+Never store state locally for anything beyond a personal experiment. Use remote state. On AWS, that means S3 for storage and a DynamoDB table for locking. The locking prevents two concurrent <code>terraform apply</code> runs from corrupting the state file simultaneously.
 
-Never edit the state file manually unless you fully understand what you are changing and have a verified backup. A corrupted state file is one of the most time-consuming things to recover from in infrastructure work.
+Never edit the state file manually unless you fully understand what you are changing and have a verified backup.
 
 <h2>2. Workspaces handle environments — but only if you design for them</h2>
 
@@ -141,13 +139,13 @@ Terraform workspaces let you use the same configuration against different enviro
 
 The mistake is assuming workspaces work without designing the configuration around them. If your resource names are hard-coded, workspaces give you separate state but identical resource names in every environment, which causes conflicts.
 
-Design your configurations with <code>terraform.workspace</code> in mind from the start. Use it to prefix resource names, select different variable files, or apply different sizing rules per environment.
+Design your configurations with <code>terraform.workspace</code> in mind from the start.
 
 <h2>3. Modules should have a single responsibility</h2>
 
 A module that creates a VPC, subnets, security groups, an EC2 instance, a database, and an S3 bucket is not a module — it is a script. It is untestable, unreusable, and unreadable six months later.
 
-A VPC module creates a VPC and its associated networking resources. A database module creates a database and its parameter group. An application module creates the compute layer. Each module has a clear boundary, a defined set of inputs, and a defined set of outputs.
+A VPC module creates a VPC and its associated networking resources. A database module creates a database. An application module creates the compute layer. Each has a clear boundary, a defined set of inputs, and a defined set of outputs.
 
 Outputs are what make modules composable. The VPC module outputs its VPC ID. The application module accepts that VPC ID as an input variable. The modules stay separate and can be updated independently.
 
@@ -155,36 +153,64 @@ Outputs are what make modules composable. The VPC module outputs its VPC ID. The
 
 <code>terraform plan</code> shows you exactly what Terraform intends to do before it does it. Reading it is not optional.
 
-The things to look for: resources being destroyed that you did not intend to destroy, resources being replaced rather than updated (replacement is destruction followed by recreation — it has downtime implications), changes to resources that are outside the scope of what you changed.
+Look for resources being destroyed that you did not intend to destroy, resources being replaced rather than updated, and changes to resources outside the scope of what you changed.
 
 A plan showing <code>2 to destroy</code> when you expected <code>1 to add</code> is a plan worth stopping on. Most infrastructure mistakes happen when someone applies without reading the plan.
 
 <h2>5. Variables and outputs are how configurations stay useful long-term</h2>
 
-A Terraform configuration with hard-coded values is a configuration you will rewrite for every new client or environment. Region, instance type, bucket name, CIDR block, environment tag — all of these should be variables with sensible defaults.
+A Terraform configuration with hard-coded values is a configuration you will rewrite for every new client or environment. Region, instance type, bucket name, CIDR block — all of these should be variables.
 
-This is not just about reusability in the abstract. It is practical. When a client needs a staging environment that mirrors production but with smaller instance sizes, a configuration built with variables lets you create it by changing a variable file. A configuration with hard-coded values requires you to duplicate and edit the entire thing.
+When a client needs a staging environment that mirrors production but with smaller instance sizes, a configuration built with variables lets you create it by changing a variable file. Hard-coded values require you to duplicate and edit the entire configuration.
 
 Outputs serve the same purpose at the module level. They make the results of one module available as inputs to another, so configurations can be composed without duplicating resource lookups.
 
-Terraform done well is infrastructure that a team can work on, that can be reviewed in a pull request, that can be promoted from dev to staging to production with confidence. That outcome requires the structural work upfront. There is no shortcut that gets you there without it.
+Terraform done well is infrastructure that a team can work on, that can be reviewed in a pull request, that can be promoted from dev to staging to production with confidence. That requires structural work upfront. There is no shortcut that gets you there without it.
     `,
   },
-
 };
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = posts[params.slug];
+export async function generateStaticParams() {
+  return Object.keys(posts).map((slug) => ({ slug }));
+}
+
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = posts[slug];
   if (!post) notFound();
+
+  const html = post.content
+    .trim()
+    .split("\n\n")
+    .map((block) => {
+      const t = block.trim();
+      if (!t) return "";
+      if (t.startsWith("<h2>")) return t;
+      return `<p style="margin-bottom:1.4rem">${t}</p>`;
+    })
+    .join("")
+    .replace(
+      /<h2>(.*?)<\/h2>/g,
+      `<h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);margin:2.5rem 0 0.9rem;letter-spacing:-0.01em">$1</h2>`
+    )
+    .replace(
+      /<code>(.*?)<\/code>/g,
+      `<code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--bg2);padding:0.15em 0.4em;border-radius:4px;color:var(--text)">$1</code>`
+    );
 
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
       <Navbar />
       <div className="container" style={{ paddingTop: 100, paddingBottom: "6rem" }}>
 
-        <Link href="/writing" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", textDecoration: "none", marginBottom: "2.5rem" }}
-          onMouseEnter={e => (e.currentTarget.style.color = "var(--text)")}
-          onMouseLeave={e => (e.currentTarget.style.color = "var(--text3)")}>
+        <Link
+          href="/writing"
+          style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", textDecoration: "none", marginBottom: "2.5rem" }}
+        >
           <ArrowLeft size={13} /> All writing
         </Link>
 
@@ -202,26 +228,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
         <article
           style={{ fontSize: "1rem", lineHeight: 1.9, color: "var(--text2)", fontWeight: 300, maxWidth: 640 }}
-          dangerouslySetInnerHTML={{
-            __html: post.content
-              .trim()
-              .split("\n\n")
-              .map(block => {
-                const t = block.trim();
-                if (!t) return "";
-                if (t.startsWith("<h2>")) return t;
-                return `<p style="margin-bottom:1.4rem">${t}</p>`;
-              })
-              .join("")
-              .replace(/<h2>(.*?)<\/h2>/g, `<h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);margin:2.5rem 0 0.9rem;letter-spacing:-0.01em">$1</h2>`)
-              .replace(/<code>(.*?)<\/code>/g, `<code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--bg2);padding:0.15em 0.4em;border-radius:4px;color:var(--text)">$1</code>`)
-          }}
+          dangerouslySetInnerHTML={{ __html: html }}
         />
 
         <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-          <Link href="/writing" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", textDecoration: "none" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "var(--text)")}
-            onMouseLeave={e => (e.currentTarget.style.color = "var(--text3)")}>
+          <Link href="/writing" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", textDecoration: "none" }}>
             Back to all posts
           </Link>
           <div style={{ display: "flex", gap: "0.6rem" }}>
@@ -239,8 +250,4 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </div>
     </main>
   );
-}
-
-export function generateStaticParams() {
-  return Object.keys(posts).map(slug => ({ slug }));
 }
