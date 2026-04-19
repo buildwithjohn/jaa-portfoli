@@ -3,7 +3,14 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 
-/* ── All posts live here. Add new ones to this array. ── */
+interface Post {
+  title: string;
+  date: string;
+  tag: string;
+  readTime: string;
+  content: string;
+}
+
 const posts: Record<string, Post> = {
 
   "from-chemistry-to-cloud": {
@@ -12,47 +19,39 @@ const posts: Record<string, Post> = {
     tag: "Career",
     readTime: "8 min read",
     content: `
-I did not plan to be a cloud engineer.
+I always loved computers.
 
-I studied Chemistry Education at university. I got my degree, I got my TRCN certification, and I was on that path. I was going to be a chemistry teacher. That was the plan.
+From childhood, computers fascinated me. When it was time to choose what to study, I wanted Computer Engineering. JAMB had other plans. My score put me in Chemistry Education instead, and that was the path I took.
 
-Then curiosity got in the way.
+So I studied chemistry. I got my degree. I got my TRCN certification. On paper, I was a chemistry teacher.
 
-<h2>The subject that changed everything</h2>
+But I was never really done with computers.
 
-I do not remember exactly when I first heard the word "cloud computing" in a serious context. But I remember the feeling when I started understanding what it actually meant. You could provision servers from a browser. You could write code that would spin up entire networks, databases, load balancers — and tear them all down when you were done. Infrastructure that used to take weeks and a data centre could be running in minutes, from a terminal.
+<h2>2020: HTML, CSS, and JavaScript</h2>
 
-I was fascinated in the same way I had been fascinated by chemistry reactions as a student. Something invisible was happening underneath, and the people who understood it could do things others could not.
+In 2020 I started teaching myself web development. HTML first, then CSS, then JavaScript. Nobody told me to. There was no job offer waiting. I just sat down and started learning, the same way I had always been drawn to understanding how things work.
 
-That feeling is what pulled me in.
+What surprised me was how quickly it clicked. The logic of building something in a browser, making it respond to interaction, shaping it with code — it made sense to me immediately. I kept going.
 
-<h2>What I actually did</h2>
+One project led to another. One concept opened the next. I started building real things: websites, then web applications, then more complex platforms. I was not following a course curriculum. I was just building, breaking things, figuring out why they broke, and building again.
 
-I started with Linux. Not because someone told me to — because I quickly realised that everything in cloud computing runs on Linux. If you do not understand how a Linux system works, you are building on a foundation you cannot see.
+<h2>The rest of the story</h2>
 
-I spent serious time on the command line. File systems, permissions, process management, networking from the terminal. Not tutorials I half-watched. Actual practice, until it became natural.
+From web development I moved into cloud infrastructure. Learning how the servers behind the applications work, how to deploy what I was building, how to make it scale and stay up. AWS, Docker, Kubernetes, Terraform — each one built on what came before.
 
-From Linux I moved into networking. TCP/IP, DNS, how HTTP actually works, what happens between when you type a URL and when a page loads. Engineers who skip this step spend years confused about things that should be simple.
+I got my AWS Cloud Practitioner certification. I started taking on client projects. I became a tech instructor. I started a YouTube channel called Build With JAA to teach what I was building.
 
-Then AWS. Then Docker. Then Kubernetes. Then Terraform. Each one opened a new layer of understanding. Each one led naturally to the next.
+Now I also vibe code — using AI tools as part of the development workflow, not as a replacement for understanding but as an accelerator on top of it. The AI space genuinely interests me, and that interest has led to building AI-powered platforms and working with LLMs as part of real project work.
 
-<h2>The part nobody tells you</h2>
+<h2>What I want you to take from this</h2>
 
-The hardest part of switching careers is not learning the technical skills. That part is difficult, but it is straightforward. You study, you practise, you build things, you break things, you fix them.
+JAMB did not give me the course I wanted. That redirection turned into a chemistry degree, a TRCN certification, and years of building technical understanding in a completely different way from what I planned.
 
-The hardest part is the period where you know enough to understand how much you do not know, but not enough to feel confident. That period is uncomfortable. Most people stop there.
+I do not think I would have the perspective I have now without that path. The discipline of studying a hard science, the training to explain complex things clearly, the experience of teaching — all of that followed me into tech and made me a better engineer.
 
-I kept going because the work itself was interesting. Not because I had a five-year plan. Not because I was chasing a salary number. Because understanding how distributed systems work, how infrastructure connects, how code becomes something running on a server somewhere — that was genuinely interesting to me.
+Your route into this field will not look like anyone else's. That is not a problem. That is the whole point.
 
-The Chemistry Education degree did not hold me back. If anything, the way I was trained to think — systematically, methodically, breaking complex processes into steps — is exactly what infrastructure engineering requires.
-
-<h2>Where it led</h2>
-
-I am now a Platform Engineer and Cloud Instructor. I build production infrastructure for clients and teach the full DevOps stack. I have shipped platforms used by real people across Nigeria and internationally.
-
-I also wrote a book about this transition. It is called From Chemistry Class to Cloud, and it is free. If you are on a similar path — whether from teaching, science, any non-CS background — it is written for you.
-
-The door is not closed because your degree says the wrong subject on it. The door is open to anyone willing to do the actual work.
+I wrote a book about this transition. It is called From Chemistry Class to Cloud, and it is free. If you are building your way into tech from an unconventional background, it was written for you.
     `,
   },
 
@@ -64,53 +63,55 @@ The door is not closed because your degree says the wrong subject on it. The doo
     content: `
 Every Kubernetes tutorial teaches you how to deploy an Nginx pod and call it a day.
 
-Nobody teaches you what happens when your monitoring is misconfigured and your node pool quietly runs out of memory. Nobody teaches you what OOMKilled means at 2am when a client's platform is down. Nobody teaches you the things you only learn by actually running Kubernetes in production.
+Nobody teaches you what happens when your monitoring is misconfigured and your node pool quietly runs out of memory. Nobody teaches you what OOMKilled means at 2am when a platform is down. Nobody teaches you the things you only learn by actually running Kubernetes in production.
 
-This is what I have learned from doing exactly that.
+That memory and monitoring failure is real. I have been there. It is the kind of incident that teaches you more than any tutorial ever will, and it is where this post starts.
 
-<h2>Lesson 1: Resource limits are not optional</h2>
+<h2>The memory incident and what it actually taught me</h2>
 
-In tutorials, resource requests and limits are mentioned briefly and then skipped. In production, not setting them is how you get a single runaway process consuming an entire node's memory and taking every other pod on that node down with it.
+A node pool running out of memory does not always look like an emergency until it is one. What you see first is degraded performance — things slowing down, response times climbing. Then pods start getting evicted. Then OOMKilled starts appearing in your logs.
 
-Every workload needs <code>requests</code> and <code>limits</code> set on both CPU and memory. This is not a best practice. It is a requirement.
+OOMKilled means the Linux kernel killed a container because it exceeded its memory limit, or because the node itself ran out of memory and the kernel had to choose what to kill. When your monitoring is not configured to alert on this, you find out when users start reporting problems — not when the problem starts.
 
-The <code>requests</code> value is what Kubernetes uses to schedule the pod onto a node. The <code>limits</code> value is the ceiling the container cannot exceed. If a container exceeds its memory limit, it gets OOMKilled — killed by the kernel for exceeding memory. If you set no limit, a single container can consume the entire node.
+The lesson is not just "set memory limits." It is layered.
 
-Start conservative. Set limits based on what your application actually needs under real load, measured with profiling, not guessed.
+<h2>Resource limits are not optional</h2>
 
-<h2>Lesson 2: Readiness and liveness probes save you at 3am</h2>
+Every workload needs <code>requests</code> and <code>limits</code> set on both CPU and memory. <code>requests</code> is what Kubernetes uses to schedule a pod onto a node — the scheduler finds a node with enough available resources to satisfy the request. <code>limits</code> is the ceiling the container cannot exceed.
 
-A pod being in the Running state does not mean your application is actually serving traffic. It means the container is running. Those are different things.
+If you set no memory limit, a single container can consume the entire node's memory. Every other pod on that node gets evicted or killed. Set limits conservatively based on what your application actually uses under real load, not what you guess it might need.
 
-Readiness probes tell Kubernetes when a pod is actually ready to receive traffic. Without them, a pod can be in the Running state, registered behind a Service, and returning errors to every request because the application inside it has not finished starting.
+<h2>Readiness and liveness probes do different jobs</h2>
 
-Liveness probes tell Kubernetes when a pod needs to be restarted. Without them, a deadlocked application will sit there forever, appearing healthy, returning nothing.
+A pod in the Running state does not mean your application is serving traffic. It means the container process started. Those are different things.
 
-Both probes should check something meaningful. Not just that the process is alive, but that it can actually respond.
+Readiness probes tell Kubernetes when a pod is actually ready to receive traffic. Without them, a pod can be Running, registered behind a Service, and returning errors because the application inside it has not finished initialising. Traffic hits it before it is ready.
 
-<h2>Lesson 3: Namespaces are not security</h2>
+Liveness probes tell Kubernetes when a pod needs to be restarted. A deadlocked application that is technically still running will sit there indefinitely without a liveness probe, appearing healthy in the cluster while serving nothing useful.
 
-New Kubernetes users often think that putting workloads in separate namespaces isolates them securely. It does not. Namespaces are organisational boundaries, not security boundaries.
+Both probes should check something real. An HTTP endpoint that actually exercises the application, not just a process check that confirms the container is alive.
 
-Pods in different namespaces on the same cluster can communicate with each other by default. A compromised pod in one namespace can reach services in another namespace unless you have explicit NetworkPolicy rules preventing it.
+<h2>Namespaces are organisation, not security</h2>
 
-If you need real isolation between workloads — separate environments, separate clients, separate risk profiles — that isolation needs to come from NetworkPolicy, or from separate clusters entirely.
+Pods in different namespaces on the same cluster can communicate with each other by default. A compromised workload in one namespace can reach services in another namespace unless explicit NetworkPolicy rules prevent it.
 
-<h2>Lesson 4: etcd is the cluster. Protect it accordingly.</h2>
+If you need real isolation between workloads — separate environments, different clients, different risk profiles — that isolation requires NetworkPolicy, or separate clusters entirely. Namespaces alone do not provide it.
 
-Everything about your Kubernetes cluster — every deployment, every secret, every configuration — is stored in etcd. If etcd is corrupted or lost without a backup, your cluster is gone.
+<h2>etcd is the cluster. Back it up.</h2>
 
-Back up etcd. Regularly. And test that the backup can actually be restored. A backup you have never tested is not a backup, it is a hope.
+Everything about your Kubernetes cluster — every Deployment, every Secret, every ConfigMap, every configuration of every resource — is stored in etcd. If etcd is lost without a backup, the cluster is gone.
 
-<h2>Lesson 5: Monitoring is not optional, it is the job</h2>
+Back up etcd regularly and test the restore. A backup you have never restored is a backup you do not actually have. You will not know it is broken until the moment you need it most.
 
-You cannot operate a Kubernetes cluster you cannot see. Prometheus and Grafana are the standard, and for good reason. But the tooling is only part of it.
+<h2>Monitoring is not optional — it is the job</h2>
 
-You need alerts that fire before problems become outages. You need dashboards that show resource utilisation, pod restart counts, failed deployments. You need to know when a node is at 80% memory before it hits 100%.
+The memory incident I described at the start was preventable. Not because the memory issue could have been avoided entirely, but because monitoring that was properly configured would have alerted before the node was full, before pods started getting evicted, before users saw anything at all.
 
-The cluster will always surprise you. Monitoring is how you find out before your users do.
+You need alerts on node memory and CPU utilisation, pod restart counts, failed deployments, and pending pods that cannot be scheduled. You need to know at 70% memory, not at 100%.
 
-These lessons came from real work on production clusters. The details in between are what separate knowing Kubernetes from operating it.
+Prometheus and Grafana are the standard tooling for a reason. The implementation takes time to set up correctly. That time is worth spending before the incident, not after.
+
+These lessons all came from real production work. The cluster will surprise you. The difference between an incident and an outage is often just how well you can see what is happening before it becomes one.
     `,
   },
 
@@ -122,68 +123,56 @@ These lessons came from real work on production clusters. The details in between
     content: `
 Terraform looks simple when you start.
 
-You write some HCL, you run <code>terraform apply</code>, and infrastructure appears. It feels like magic. Then you try to manage it at scale, across multiple environments, with a team, and you discover that Terraform is not magic. It is a tool that rewards discipline and punishes shortcuts.
+You write some HCL, run <code>terraform apply</code>, and infrastructure appears. It feels clean. Then you try to manage it across multiple environments, with real client constraints, and you discover that Terraform rewards discipline and punishes shortcuts in equal measure.
 
-Here are five lessons I have learned from using Terraform on real infrastructure projects.
+These five lessons came from real IaC work across real projects.
 
-<h2>1. State is everything. Treat it that way.</h2>
+<h2>1. State is everything — treat it that way</h2>
 
-Terraform's state file is the source of truth for what it believes exists in your infrastructure. If the state is wrong, Terraform will make wrong decisions. If the state is lost, Terraform no longer knows what it manages.
+Terraform state is the record of what Terraform believes exists in your infrastructure. If state is wrong, Terraform makes wrong decisions. If state is lost, Terraform no longer knows what it manages.
 
-Never store state in a local file for anything beyond a personal experiment. Use remote state — S3 with DynamoDB locking on AWS is the standard. The DynamoDB table prevents two people from running <code>terraform apply</code> at the same time and corrupting the state.
+Never store state locally for anything beyond a personal experiment. Use remote state. On AWS, that means S3 for storage and a DynamoDB table for locking. The locking is the part people skip and then regret — it prevents two concurrent <code>terraform apply</code> runs from corrupting the state file simultaneously.
 
-And never edit the state file manually unless you fully understand what you are doing and have a backup. A corrupted state file is one of the most painful things to recover from in infrastructure work.
+Never edit the state file manually unless you fully understand what you are changing and have a verified backup. A corrupted state file is one of the most time-consuming things to recover from in infrastructure work.
 
-<h2>2. Modules should be honest about their purpose</h2>
+<h2>2. Workspaces handle environments — but only if you design for them</h2>
 
-Terraform modules are powerful, but they are easy to misuse. The most common mistake is writing a module that tries to do too many things — a single module that creates a VPC, subnets, security groups, an EC2 instance, an RDS database, and an S3 bucket.
+Terraform workspaces let you use the same configuration against different environments — dev, staging, production — each with its own isolated state. The workspace name becomes a variable you can use inside your configuration to differentiate resource names, sizing, or behaviour per environment.
 
-A module should encapsulate one coherent concept. A VPC module. A database module. An application module. Modules that try to do everything become impossible to test, impossible to reuse, and impossible to understand six months later.
+The mistake is assuming workspaces work without designing the configuration around them. If your resource names are hard-coded, workspaces give you separate state but identical resource names in every environment, which causes conflicts.
 
-Write modules that have a clear, single responsibility. Name them after what they are, not what they contain.
+Design your configurations with <code>terraform.workspace</code> in mind from the start. Use it to prefix resource names, select different variable files, or apply different sizing rules per environment.
 
-<h2>3. Separate environments mean separate state</h2>
+<h2>3. Modules should have a single responsibility</h2>
 
-Development, staging, and production environments should have completely separate Terraform state files. Not separate directories pointing to the same state. Separate state, period.
+A module that creates a VPC, subnets, security groups, an EC2 instance, a database, and an S3 bucket is not a module — it is a script. It is untestable, unreusable, and unreadable six months later.
 
-The cleanest pattern is separate S3 state prefixes per environment, or separate workspaces if you prefer that approach. The key is that a mistake in the development environment cannot touch production state.
+A VPC module creates a VPC and its associated networking resources. A database module creates a database and its parameter group. An application module creates the compute layer. Each module has a clear boundary, a defined set of inputs, and a defined set of outputs.
 
-I have seen engineers accidentally run a <code>terraform destroy</code> against production because their state was not properly separated. That is the kind of incident you do not want to explain.
+Outputs are what make modules composable. The VPC module outputs its VPC ID. The application module accepts that VPC ID as an input variable. The modules stay separate and can be updated independently.
 
-<h2>4. Plan before you apply. Every time.</h2>
+<h2>4. Read the plan. Every time.</h2>
 
-<code>terraform plan</code> tells you exactly what Terraform intends to do before it does it. Read it. Every time.
+<code>terraform plan</code> shows you exactly what Terraform intends to do before it does it. Reading it is not optional.
 
-The things to look for: unexpected resource destruction, unexpected resource replacement (which is effectively destruction and recreation), changes to things you did not intend to change.
+The things to look for: resources being destroyed that you did not intend to destroy, resources being replaced rather than updated (replacement is destruction followed by recreation — it has downtime implications), changes to resources that are outside the scope of what you changed.
 
-A plan that shows <code>0 to add, 0 to change, 2 to destroy</code> when you were expecting <code>1 to add, 0 to change, 0 to destroy</code> is a plan worth stopping and investigating before applying.
+A plan showing <code>2 to destroy</code> when you expected <code>1 to add</code> is a plan worth stopping on. Most infrastructure mistakes happen when someone applies without reading the plan.
 
-Get into the habit of reading the entire plan output, not just looking for errors.
+<h2>5. Variables and outputs are how configurations stay useful long-term</h2>
 
-<h2>5. Variables and outputs make infrastructure reusable</h2>
+A Terraform configuration with hard-coded values is a configuration you will rewrite for every new client or environment. Region, instance type, bucket name, CIDR block, environment tag — all of these should be variables with sensible defaults.
 
-Hard-coded values inside Terraform configurations are the enemy of reusability. If your VPC CIDR block, your instance type, your region, your bucket name are all hard-coded, you cannot use the same configuration for a different environment or a different client without rewriting it.
+This is not just about reusability in the abstract. It is practical. When a client needs a staging environment that mirrors production but with smaller instance sizes, a configuration built with variables lets you create it by changing a variable file. A configuration with hard-coded values requires you to duplicate and edit the entire thing.
 
-Variables make configurations flexible. Outputs make configurations composable — the VPC module outputs its VPC ID, which the application module accepts as an input.
+Outputs serve the same purpose at the module level. They make the results of one module available as inputs to another, so configurations can be composed without duplicating resource lookups.
 
-This is not just a style preference. It is what makes Terraform configurations maintainable over time, reusable across projects, and shareable with a team.
-
-Terraform rewards the engineers who put in the structural work upfront. The shortcuts are always visible later — usually at the worst possible time.
+Terraform done well is infrastructure that a team can work on, that can be reviewed in a pull request, that can be promoted from dev to staging to production with confidence. That outcome requires the structural work upfront. There is no shortcut that gets you there without it.
     `,
   },
 
 };
 
-/* ── Types ── */
-interface Post {
-  title: string;
-  date: string;
-  tag: string;
-  readTime: string;
-  content: string;
-}
-
-/* ── Page component ── */
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = posts[params.slug];
   if (!post) notFound();
@@ -193,14 +182,12 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       <Navbar />
       <div className="container" style={{ paddingTop: 100, paddingBottom: "6rem" }}>
 
-        {/* Back */}
         <Link href="/writing" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", textDecoration: "none", marginBottom: "2.5rem" }}
           onMouseEnter={e => (e.currentTarget.style.color = "var(--text)")}
           onMouseLeave={e => (e.currentTarget.style.color = "var(--text3)")}>
           <ArrowLeft size={13} /> All writing
         </Link>
 
-        {/* Header */}
         <header style={{ marginBottom: "3rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", color: "var(--cyan)", background: "var(--cyan-dim)", padding: "0.2rem 0.6rem", borderRadius: "4px", letterSpacing: "0.06em" }}>{post.tag}</span>
@@ -213,7 +200,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           <div style={{ height: 1, background: "var(--border)" }} />
         </header>
 
-        {/* Content */}
         <article
           style={{ fontSize: "1rem", lineHeight: 1.9, color: "var(--text2)", fontWeight: 300, maxWidth: 640 }}
           dangerouslySetInnerHTML={{
@@ -224,7 +210,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 const t = block.trim();
                 if (!t) return "";
                 if (t.startsWith("<h2>")) return t;
-                if (t.startsWith("<code>") || t.includes("<code>")) return `<p style="margin-bottom:1.4rem">${t}</p>`;
                 return `<p style="margin-bottom:1.4rem">${t}</p>`;
               })
               .join("")
@@ -233,12 +218,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           }}
         />
 
-        {/* Footer nav */}
         <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <Link href="/writing" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--text3)", textDecoration: "none" }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--text)")}
             onMouseLeave={e => (e.currentTarget.style.color = "var(--text3)")}>
-            ← All posts
+            Back to all posts
           </Link>
           <div style={{ display: "flex", gap: "0.6rem" }}>
             <a href="https://linkedin.com/in/john-ayomide-akinola" target="_blank" rel="noreferrer"
