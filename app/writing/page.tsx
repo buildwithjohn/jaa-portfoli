@@ -5,12 +5,24 @@ import Navbar from "@/components/Navbar";
 import { ArrowUpRight, Clock } from "lucide-react";
 
 const posts = [
-  { slug:"from-chemistry-to-cloud",   title:"From Chemistry Class to Cloud — My Unfiltered Story",              date:"Mar 1, 2026",  tag:"Career",             time:"8 min",  live:true  },
-  { slug:"kubernetes-production",     title:"Running Kubernetes in Production — What Nobody Tells You",           date:"Mar 10, 2026", tag:"Platform Engineering",time:"12 min", live:true  },
-  { slug:"terraform-lessons",        title:"5 Terraform Lessons From Real Infrastructure Projects",               date:"Mar 18, 2026", tag:"Platform Engineering",time:"10 min", live:true  },
-  { slug:"devops-africa",            title:"Breaking Into DevOps From Africa — The Honest Guide",                 date:"Coming soon",  tag:"Career",             time:"15 min", live:false },
-  { slug:"aws-certifications",       title:"Are AWS Certifications Worth It in 2026?",                            date:"Coming soon",  tag:"Cloud",              time:"7 min",  live:false },
-  { slug:"prompt-engineering-prod",  title:"What Prompt Engineering Actually Looks Like in Production",           date:"Coming soon",  tag:"AI",                 time:"9 min",  live:false },
+  { slug:"from-chemistry-to-cloud",  title:"From Chemistry Class to Cloud — My Unfiltered Story",         date:"Mar 1, 2026",  tag:"Career",              time:"8 min",  live:true  },
+  { slug:"kubernetes-production",    title:"Running Kubernetes in Production — What Nobody Tells You",     date:"Mar 10, 2026", tag:"Platform Engineering", time:"12 min", live:true  },
+  { slug:"terraform-lessons",       title:"5 Terraform Lessons From Real Infrastructure Projects",         date:"Mar 18, 2026", tag:"Platform Engineering", time:"10 min", live:true  },
+  { slug:"devops-africa",           title:"Breaking Into DevOps From Africa — The Honest Guide",           date:"Coming soon",  tag:"Career",              time:"15 min", live:false },
+  { slug:"aws-certifications",      title:"Are AWS Certifications Worth It in 2026?",                      date:"Coming soon",  tag:"Cloud",               time:"7 min",  live:false },
+  { slug:"prompt-engineering-prod", title:"What Prompt Engineering Actually Looks Like in Production",     date:"Coming soon",  tag:"AI",                  time:"9 min",  live:false },
+];
+
+/* Teaching series — DevOps Engineer from Scratch */
+const series = [
+  { num:"01", title:"Why Linux First — Before Docker, Before Cloud, Before Everything",  live:false },
+  { num:"02", title:"Networking for Engineers Who Skipped It",                            live:false },
+  { num:"03", title:"Docker From First Principles — Not Just the Commands",               live:false },
+  { num:"04", title:"Kubernetes Without the Magic — What Actually Happens",               live:false },
+  { num:"05", title:"Terraform — Infrastructure You Can Read and Review",                 live:false },
+  { num:"06", title:"CI/CD Pipelines That Actually Work in Production",                   live:false },
+  { num:"07", title:"Monitoring — You Cannot Fix What You Cannot See",                   live:false },
+  { num:"08", title:"AWS for the Self-Taught Engineer",                                   live:false },
 ];
 
 const fade = (d=0) => ({ initial:{opacity:0,y:16}, whileInView:{opacity:1,y:0}, viewport:{once:true}, transition:{duration:0.45,delay:d} });
@@ -20,12 +32,15 @@ export default function WritingPage() {
     <main style={{ background:"var(--bg)", minHeight:"100vh" }}>
       <Navbar />
       <div className="container" style={{ paddingTop:100, paddingBottom:"6rem" }}>
+
+        {/* Header */}
         <motion.div initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.5 }} style={{ marginBottom:"3rem" }}>
           <h1 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"clamp(1.6rem,4vw,2.2rem)", color:"var(--text)", letterSpacing:"-0.03em", marginBottom:"0.6rem" }}>Writing</h1>
-          <p className="prose">Tech articles, engineering deep-dives, and career writing from someone who builds in production every day. No filler. No fluff.</p>
+          <p className="prose">Tech articles, engineering deep-dives, and career writing from someone who builds in production. No filler. No fluff.</p>
         </motion.div>
 
-        <div style={{ display:"flex", flexDirection:"column", gap:"0" }}>
+        {/* ── POSTS ── */}
+        <div style={{ display:"flex", flexDirection:"column", gap:"0", marginBottom:"4rem" }}>
           {posts.map((p,i)=>(
             <motion.div key={p.slug} {...fade(i*0.04)}>
               {p.live ? (
@@ -63,13 +78,38 @@ export default function WritingPage() {
         </div>
 
         <div className="divider" />
-        <div style={{ textAlign:"center" }}>
-          <p style={{ fontSize:"0.84rem", color:"var(--text2)", marginBottom:"1rem", fontWeight:300 }}>Get notified when new articles drop.</p>
+
+        {/* ── TEACHING SERIES ── */}
+        <motion.div {...fade(0)} style={{ marginBottom:"3rem" }}>
+          <div style={{ marginBottom:"1.2rem" }}>
+            <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.62rem", color:"var(--cyan)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:"0.5rem" }}>Teaching Series</div>
+            <h2 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:"1.1rem", color:"var(--text)", letterSpacing:"-0.02em", marginBottom:"0.4rem" }}>The DevOps Engineer from Scratch</h2>
+            <p style={{ fontSize:"0.84rem", color:"var(--text2)", fontWeight:300, lineHeight:1.65 }}>A structured series covering the full path from zero to production-grade DevOps engineer. Written in the order you should actually learn it, based on what works in practice.</p>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:"0" }}>
+            {series.map((s,i)=>(
+              <div key={s.num} style={{ display:"flex", alignItems:"center", gap:"1.2rem", padding:"0.85rem 0", borderBottom:i<series.length-1?"1px solid var(--border)":"none", opacity:s.live?1:0.45 }}>
+                <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.62rem", color:"var(--text3)", flexShrink:0, minWidth:24 }}>{s.num}</span>
+                <span style={{ fontSize:"0.88rem", color:"var(--text)", fontWeight: s.live?500:400, flex:1, lineHeight:1.4 }}>{s.title}</span>
+                <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.58rem", color:"var(--text3)", background:"var(--bg2)", padding:"0.15rem 0.5rem", borderRadius:"4px", flexShrink:0 }}>
+                  {s.live ? "Read" : "Soon"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <div className="divider" />
+
+        {/* Newsletter */}
+        <motion.div {...fade(0.1)} style={{ textAlign:"center" }}>
+          <p style={{ fontSize:"0.84rem", color:"var(--text2)", marginBottom:"1rem", fontWeight:300 }}>Get notified when new posts and series episodes drop.</p>
           <div style={{ display:"flex", gap:"0.6rem", maxWidth:380, margin:"0 auto", flexWrap:"wrap" }}>
             <input type="email" placeholder="your@email.com" style={{ flex:1, minWidth:180, padding:"0.7rem 0.9rem", borderRadius:"7px", border:"1px solid var(--border)", background:"var(--surface)", color:"var(--text)", fontSize:"0.88rem", outline:"none", fontFamily:"'DM Sans',sans-serif" }}/>
             <button style={{ padding:"0.7rem 1.2rem", background:"var(--text)", color:"var(--bg)", fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:"0.82rem", border:"none", borderRadius:"7px", cursor:"pointer", whiteSpace:"nowrap" }}>Subscribe</button>
           </div>
-        </div>
+        </motion.div>
+
       </div>
     </main>
   );
