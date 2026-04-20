@@ -17,7 +17,7 @@ const featured_projects = [
   { title: "S&D Prophetic School LMS",    desc: "Full LMS with role-based auth, student and admin portals, progress tracking, and curriculum management. Live in production.", tags: ["Next.js 15","Supabase","Role-Based Auth","Full-Stack"], github: "https://github.com/buildwithjohn/sandd", live: "https://sandd.abiodunsule.uk" },
   { title: "CrimsonWings Blood Logistics", desc: "Marketing site and operations dashboard for a blood logistics company — fullstack, client-facing and internal tools in one platform.", tags: ["Next.js 15","Full-Stack","Dashboard","Logistics"], github: "https://github.com/buildwithjohn/crimson", live: null },
   { title: "Cedar Home Builder",           desc: "Diaspora-focused real estate platform with interactive maps, geo-referenced site data, drone footage, and calendar booking.", tags: ["Vue 3","Leaflet.js","Vite","Vercel"], github: "https://github.com/Johnprexy/cedar-africa", live: "https://cedar-africa.vercel.app" },
-  { title: "My Africa Family",             desc: "Social networking platform for Africans abroad — realtime posts, messaging, stories, friend requests, and notifications.", tags: ["React","Supabase","Realtime","Full-Stack"], github: "https://github.com/buildwithjohn", live: null },
+  { title: "PayLedger",                     desc: "Production-grade personal finance dashboard — NgRx state management, interactive Chart.js analytics, real-time transaction feed, and budget tracker with threshold alerts.", tags: ["Angular 17","NgRx","RxJS","Chart.js"], github: "https://github.com/buildwithjohn/payleger", live: "https://payleger.vercel.app/" },
 ];
 
 const socials = [
